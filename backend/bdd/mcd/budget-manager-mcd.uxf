@@ -1,0 +1,35 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>500</x><y>340</y><w>100</w><h>90</h></coordinates><panel_attributes>Utilisateur
+--
+nom_utilisateur
+email
+mot-passe
+remediation</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>500</x><y>80</y><w>100</w><h>90</h></coordinates><panel_attributes>Groupe
+--
+impots
+loyer
+credits
+mois_budget</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>760</x><y>350</y><w>100</w><h>50</h></coordinates><panel_attributes>Role
+--
+nom_role</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1000</x><y>340</y><w>100</w><h>80</h></coordinates><panel_attributes>depense
+--
+nom_depense
+montant
+date
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1000</x><y>170</y><w>100</w><h>50</h></coordinates><panel_attributes>Categorie
+--
+nom_categorie</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>350</y><w>100</w><h>60</h></coordinates><panel_attributes>Salaire
+--
+montant
+mois_salaire</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>160</y><w>90</w><h>200</h></coordinates><panel_attributes>lt=-
+m1=1..*
+m2=1..1
+détiens ^</panel_attributes><additional_attributes>10;180;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>590</x><y>360</y><w>190</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..*
+m2=1..1
+possède &gt;</panel_attributes><additional_attributes>10;20;170;20</additional_attributes></element><element><id>Relation</id><coordinates><x>270</x><y>360</y><w>250</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..*
+m2=1..1
+détenue &gt;</panel_attributes><additional_attributes>10;20;230;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1040</x><y>210</y><w>90</w><h>150</h></coordinates><panel_attributes>lt=-
+m1=1..*
+m2=1..1
+possède ^</panel_attributes><additional_attributes>10;130;10;10</additional_attributes></element></diagram>
