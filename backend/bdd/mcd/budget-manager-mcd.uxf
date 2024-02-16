@@ -2,7 +2,7 @@
 --
 nom_utilisateur
 email
-mot-passe
+mot_passe
 remediation</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>500</x><y>80</y><w>100</w><h>90</h></coordinates><panel_attributes>Groupe
 --
 impots
@@ -19,7 +19,7 @@ date
 --
 nom_categorie</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>180</x><y>350</y><w>100</w><h>60</h></coordinates><panel_attributes>Salaire
 --
-montant
+somme
 mois_salaire</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>160</y><w>90</w><h>200</h></coordinates><panel_attributes>lt=-
 m1=1..*
 m2=1..1
