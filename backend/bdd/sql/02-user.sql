@@ -6,6 +6,10 @@
 
 USE budget_manager;
 
+-- ---------------------------------------------------------------
+-- User
+-- ---------------------------------------------------------------
+
 DROP USER IF EXISTS "budget_user"@"localhost";
 
 CREATE USER "budget_user"@"localhost" IDENTIFIED BY "budget_super";
