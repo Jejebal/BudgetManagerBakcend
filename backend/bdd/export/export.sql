@@ -17,6 +17,19 @@ USE `budget_manager`;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+-- ------------------------------------------------------
+-- User
+-- ------------------------------------------------------
+
+DROP USER IF EXISTS "budget_user"@"localhost";
+
+CREATE USER "budget_user"@"localhost" IDENTIFIED BY "budget_super";
+
+GRANT INSERT ON budget_manager.* TO "budget_user"@"localhost";
+GRANT SELECT ON budget_manager.* TO "budget_user"@"localhost";
+GRANT UPDATE ON budget_manager.* TO "budget_user"@"localhost";
+GRANT DELETE ON budget_manager.* TO "budget_user"@"localhost";
+
 --
 -- Table structure for table `Categorie`
 --
