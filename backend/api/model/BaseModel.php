@@ -12,6 +12,8 @@
 
 namespace Projet\Budgetmanager\model;
 
+use Projet\Budgetmanager\model\Database;
+
 class BaseModel {
 
     /** List des noms de la base de données dans les noms php */

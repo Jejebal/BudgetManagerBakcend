@@ -1,7 +1,6 @@
 {
     "name": "projet/budgetmanager",
     "description": "Une application de gestion de budget et de dépenses monétaire.",
-    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Projet\\Budgetmanager\\": "src/"
@@ -10,7 +9,7 @@
     "authors": [
         {
             "name": "Jérémy Ballanfat Illya Nuzhny",
-            "email": "jeremy.bllnfya.nzhn@eduge.ch"
+            "email": "jeremy.bllnf.ilya.nzhn@eduge.ch"
         }
     ],
     "minimum-stability": "stable",
