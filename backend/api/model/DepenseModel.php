@@ -12,6 +12,7 @@
 
 namespace Projet\Budgetmanager\model;
 
+use PDOException;
 use Projet\Budgetmanager\model\BaseModel as BaseModel;
 use Projet\Budgetmanager\model\Database;
 
@@ -23,7 +24,8 @@ class DepenseModel extends BaseModel {
         "nom_depense" => "nomDepense",
         "montant" => "montant",
         "date" => "date",
-        "id_categorie" => "idCategorie"
+        "id_categorie" => "idCategorie",
+        "id_utilisateur" => "idUtilisateur"
     ];
 
     public int $idDepense;
@@ -35,6 +37,8 @@ class DepenseModel extends BaseModel {
     public string $date;
 
     public int $idCategorie;
+
+    public int $idUtilisateur;
 
     public function __construct(array $init = [])
     {
@@ -54,39 +58,39 @@ class DepenseModel extends BaseModel {
     public function setDepense(){
 
         $query = "INSERT INTO `Depense`
-        (`nom_depense`, `montant`, `date`, `id_categorie`)
-        VALUES(:nomDepense, :montant, :date, :idCategorie);";
+        (`Depense`.`nom_depense`, `Depense`.`montant`, `Depense`.`date`, `Depense`.`id_categorie`, `Depense`.`id_utilisateur`)
+        VALUES(:nomDepense, :montant, :date, :idCategorie, :idUtilisateur);";
 
         $param = [
 
             ":nomDepense" => $this->nomDepense,
             ":montant" => $this->montant,
             ":date" => $this->date,
-            ":idCategorie" => $this->idCategorie
+            ":idCategorie" => $this->idCategorie,
+            ":idUtilisateur" => $this->idUtilisateur
 
         ];
 
-        $statement = DataBase::getDB()->run($query, $param);
-        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
-        return $statement->fetch();
+        DataBase::getDB()->run($query, $param);
+        return DataBase::getDB()->lastInsertId();
 
     }
 
-    public static function getAllDepenseByUser($id){
+    public static function getAllDepenseByUser($idUtilisateur){
 
         $query = "SELECT *
         FROM `Depense`
-        WHERE `Depense`.`id_depense` = :idDepense;";
+        WHERE `Depense`.`id_utilisateur` = :idUtilisateur;";
 
         $param = [
 
-            ":idDepense" => $id
+            ":idDepense" => $idUtilisateur
 
         ];
 
         $statement = DataBase::getDB()->run($query, $param);
         $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
-        return $statement->fetch();
+        return $statement->fetchAll();
 
     }
 
@@ -106,9 +110,18 @@ class DepenseModel extends BaseModel {
 
         ];
 
-        $statement = DataBase::getDB()->run($query, $param);
-        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
-        return $statement->fetch();
+        try{
+
+            DataBase::getDB()->run($query, $param);
+
+            return true;
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
 
     }
 
@@ -123,9 +136,18 @@ class DepenseModel extends BaseModel {
 
         ];
 
-        $statement = DataBase::getDB()->run($query, $param);
-        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
-        return $statement->fetch();
+        try{
+
+            DataBase::getDB()->run($query, $param);
+
+            return true;
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
 
     }
 }
