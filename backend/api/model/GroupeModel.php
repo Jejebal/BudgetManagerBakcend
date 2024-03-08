@@ -53,7 +53,7 @@ class GroupeModel extends BaseModel {
         
     }
 
-    public static function getGroupe($id){
+    public static function getGroupe($id) : GroupeModel | false{
 
         $query = "SELECT *
         FROM `Groupe`
@@ -67,6 +67,7 @@ class GroupeModel extends BaseModel {
 
         $statement = DataBase::getDB()->run($query, $param);
         $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
+        return $statement->fetch();
 
     }
 

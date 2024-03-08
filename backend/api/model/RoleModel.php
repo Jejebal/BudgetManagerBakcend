@@ -29,4 +29,31 @@ class RoleModel extends BaseModel {
 
     public string $nomRole;
 
+    public function __construct($init = [])
+    {
+
+        $this->idRole = $init["id_role"] ?? -1;
+
+        $this->nomRole = $init["nom_role"] ?? "";
+        
+    }
+
+    public static function getRole($id) : RoleModel | false{
+
+        $query = "SELECT *
+        FROM `Role`
+        WHERE `Role`.`id_role` = :idRole";
+
+        $param = [
+
+            ":idRole" => $id
+
+        ];
+
+        $statement = Database::getDB()->run($query, $param);
+        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, static::class);
+        return $statement->fetch();
+
+    }
+
 }
