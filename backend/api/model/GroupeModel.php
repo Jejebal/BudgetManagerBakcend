@@ -14,6 +14,8 @@ namespace Projet\Budgetmanager\model;
 
 use Projet\Budgetmanager\model\BaseModel as BaseModel;
 
+use Projet\Budgetmanager\model\Database as Database;
+
 class GroupeModel extends BaseModel {
 
     protected $map = [
@@ -65,7 +67,6 @@ class GroupeModel extends BaseModel {
 
         $statement = DataBase::getDB()->run($query, $param);
         $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
-        return $statement->fetch();
 
     }
 
