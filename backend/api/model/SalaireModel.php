@@ -105,21 +105,4 @@ class SalaireModel extends BaseModel {
         return $statement->fetch();
 
     }
-
-    public static function deleteSalaire($id){
-
-        $query = "DELETE FROM `Salaire`
-        WHERE `Salaire`.`id_Salaire` = :idSalaire;";
-
-        $param = [
-
-            ":idSalaire" => $id
-
-        ];
-
-        $statement = DataBase::getDB()->run($query, $param);
-        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
-        return $statement->fetch();
-
-    }
 }
