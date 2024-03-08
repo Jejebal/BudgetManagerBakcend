@@ -2,19 +2,19 @@
 
 /**
  * 
- * Project : Science scope
- * Description : Un site permutant de faire passer des questionnaires a des élève et créer des questionnaires.
+ * Project : Budget manager
+ * Description : Une application de gestion de budget et de dépenses monétaire.
  * File : BaseModel.php
- * Authors : Jérémy Ballanfat, Kajan Muthuligam, Jamal Saeed
- * Date : 7 mars 2024
+ * Authors : Jérémy Ballanfat, Illya Nuzhny
+ * Date : 8 mars 2024
  * 
  */
 
-namespace Projet\Sciencescope\model;
+namespace Projet\Budgetmanager\model;
 
 use PDOStatement;
 
-require_once("../secret.php");
+require_once("../../secret.php");
 
 class Database {
 
