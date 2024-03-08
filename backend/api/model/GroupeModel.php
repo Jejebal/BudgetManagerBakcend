@@ -26,6 +26,47 @@ class GroupeModel extends BaseModel {
 
     ];
 
-    public int $impots;
+    public int $idGroupe;
+
+    public float $impots;
+
+    public float $loyer;
+
+    public float $credit;
+
+    public string $moisBudget;
+
+    public function __construct(array $init = [])
+    {
+
+        $this->idGroupe = $init["id_groupe"] ?? -1;
+
+        $this->impots = $init["impots"] ?? -1;
+
+        $this->loyer = $init["loyer"] ?? -1;
+
+        $this->credit = $init["credit"] ?? -1;
+
+        $this->moisBudget = $init["mois_budget"] ?? "";
+        
+    }
+
+    public static function getGroupe($id){
+
+        $query = "SELECT *
+        FROM `Groupe`
+        WHERE `Groupe`.`id_groupe` = :idGroupe;";
+
+        $param = [
+
+            ":idGroupe" => $id
+
+        ];
+
+        $statement = DataBase::getDB()->run($query, $param);
+        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
+        return $statement->fetch();
+
+    }
 
 }
