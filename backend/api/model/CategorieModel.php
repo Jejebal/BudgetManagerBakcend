@@ -51,6 +51,7 @@ class CategorieModel extends BaseModel {
         ];
 
         $statement = DataBase::getDB()->run($query, $param);
+        return DataBase::getDB()->lastInsertId();
 
     }
 
