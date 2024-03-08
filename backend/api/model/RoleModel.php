@@ -4,7 +4,7 @@
  * 
  * Project : Budget manager
  * Description : Une application de gestion de budget et de dépenses monétaire.
- * File : BaseModel.php
+ * File : RoleModel.php
  * Authors : Jérémy Ballanfat, Illya Nuzhny
  * Date : 8 mars 2024
  * 
