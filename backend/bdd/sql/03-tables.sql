@@ -50,5 +50,6 @@ CREATE TABLE IF NOT EXISTS Depense (
     nom_depense VARCHAR(100) NOT NULL UNIQUE,
     montant DOUBLE NOT NULL,
     date DATE NOT NULL,
-    id_categorie INT NOT NULL
+    id_categorie INT NOT NULL,
+    id_utilisateur INT NOT NULL
 );

@@ -24,6 +24,9 @@ FOREIGN KEY (id_utilisateur)
 REFERENCES Utilisateur(id_utilisateur);
 
 ALTER TABLE Depense
-ADD CONSTRAINT fk_depense_groupe
+ADD CONSTRAINT fk_depense_categorie
 FOREIGN KEY (id_categorie)
-REFERENCES Categorie(id_categorie);
+REFERENCES Categorie(id_categorie),
+ADD CONSTRAINT fk_depense_utilisateur
+FOREIGN KEY (id_utilisateur)
+REFERENCES Utilisateur(id_utilisateur);

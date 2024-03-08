@@ -72,7 +72,7 @@ class DepenseModel extends BaseModel {
 
     }
 
-    public static function getDepense($id){
+    public static function getAllDepenseByUser($id){
 
         $query = "SELECT *
         FROM `Depense`
