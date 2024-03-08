@@ -61,8 +61,7 @@ class UserModel extends BaseModel {
 
     }
 
-    public static function selectUserByUsername($nom)
-    {
+    public static function selectUserByUsername($nom) : UserModel | false{
         
         $query = "SELECT *
         FROM `Utilisateur`
@@ -80,7 +79,7 @@ class UserModel extends BaseModel {
 
     }
     
-    public static function verifiPassword($nom, $motPasse){
+    public static function verifiPassword($nom, $motPasse) : UserModel | false{
 
         $user = UserModel::selectUserByUsername($nom);
 
@@ -99,7 +98,7 @@ class UserModel extends BaseModel {
 
     }
 
-    public function creatUser($nom, $email = null, $motPasse, $remediation, $idGroupe){
+    public function creatUser($nom, $email = null, $motPasse, $remediation, $idGroupe) : int | false{
 
         $motPasse = password_hash($motPasse, PASSWORD_DEFAULT);
 

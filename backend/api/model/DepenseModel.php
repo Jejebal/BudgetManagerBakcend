@@ -51,7 +51,7 @@ class DepenseModel extends BaseModel {
         
     }
 
-    public static function setDepense(){
+    public function setDepense(){
 
         $query = "INSERT INTO `Depense`
         (`nom_depense`, `montant`, `date`, `id_categorie`)
@@ -59,10 +59,10 @@ class DepenseModel extends BaseModel {
 
         $param = [
 
-            ":nomDepense" => $nom,
-            ":montant" => $montant,
-            ":date" => $date,
-            ":idCategorie" => $idCategorie
+            ":nomDepense" => $this->nomDepense,
+            ":montant" => $this->montant,
+            ":date" => $this->date,
+            ":idCategorie" => $this->idCategorie
 
         ];
 
