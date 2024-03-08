@@ -79,7 +79,7 @@ class UserModel extends BaseModel {
 
     }
     
-    public static function verifiPassword($nom, $motPasse) : UserModel | false{
+    public static function verifyPassword($nom, $motPasse) : UserModel | false{
 
         $user = UserModel::selectUserByUsername($nom);
 
@@ -98,7 +98,7 @@ class UserModel extends BaseModel {
 
     }
 
-    public function creatUser($nom, $email = null, $motPasse, $remediation, $idGroupe) : int | false{
+    public function insertUser($nom, $email = null, $motPasse, $remediation, $idGroupe) : int | false{
 
         $motPasse = password_hash($motPasse, PASSWORD_DEFAULT);
 

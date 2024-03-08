@@ -38,7 +38,7 @@ class RoleModel extends BaseModel {
         
     }
 
-    public static function getRole($id) : RoleModel | false{
+    public static function selectRole($id) : RoleModel | false{
 
         $query = "SELECT *
         FROM `Role`

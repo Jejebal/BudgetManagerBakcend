@@ -48,7 +48,7 @@ class SalaireModel extends BaseModel {
         
     }
 
-    public function setSalaire(){
+    public function insertSalaire(){
 
         $query = "INSERT INTO `Salaire`
         (`somme`, `mois_salaire`, `id_utilisateur`)
@@ -67,7 +67,7 @@ class SalaireModel extends BaseModel {
 
     }
 
-    public static function getSalaire($id){
+    public static function selectSalaire($id){
 
         $query = "SELECT *
         FROM `Salaire`

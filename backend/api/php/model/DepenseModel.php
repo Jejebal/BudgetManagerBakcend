@@ -55,7 +55,7 @@ class DepenseModel extends BaseModel {
         
     }
 
-    public function setDepense(){
+    public function insertDepense(){
 
         $query = "INSERT INTO `Depense`
         (`Depense`.`nom_depense`, `Depense`.`montant`, `Depense`.`date`, `Depense`.`id_categorie`, `Depense`.`id_utilisateur`)
@@ -76,7 +76,7 @@ class DepenseModel extends BaseModel {
 
     }
 
-    public static function getAllDepenseByUser($idUtilisateur){
+    public static function selectAllDepenseByUser($idUtilisateur){
 
         $query = "SELECT *
         FROM `Depense`

@@ -53,7 +53,7 @@ class GroupeModel extends BaseModel {
         
     }
 
-    public static function getGroupe($id) : GroupeModel | false{
+    public static function selectGroupe($id) : GroupeModel | false{
 
         $query = "SELECT *
         FROM `Groupe`

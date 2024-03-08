@@ -38,7 +38,7 @@ class CategorieModel extends BaseModel {
         
     }
 
-    public static function getCategorie($id){
+    public static function selectCategorie($id){
 
         $query = "SELECT *
         FROM `Categorie`
