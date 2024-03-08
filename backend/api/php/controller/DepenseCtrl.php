@@ -18,6 +18,20 @@ class DepenseCtrl {
 
     public function createDepense($nom, $montant, $date, $idCategorie){
 
+        $error = [];
+
+        if (strlen($nom) >= 100 || strlen($nom) <= 3) {
+
+            $error["nom"] = "Le nom de la dépense peut contenir entre 3 et 100 caractères";
+
+        }
+
+        if (strlen($montant) > 14) {
+
+            $error["montant"] = "Arretez de vous mentir, vous ne gagnez pas autant que ça";
+
+        }
+
         
 
     }
