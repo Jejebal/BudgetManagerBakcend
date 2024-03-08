@@ -18,8 +18,10 @@ class UserCtrl {
 
     public function creatAdmin($nom, $email, $motPasse, $remediation, $idGroupe){
 
-        if(strlen($nom) >= 3 && (str_contains($email, "@") && str_contains($email, "."))){
+        if(strlen($nom) >= 3){
+
             
+
         }
 
     }
