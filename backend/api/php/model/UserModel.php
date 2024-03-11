@@ -98,38 +98,37 @@ class UserModel extends BaseModel {
 
     }
 
-    public function insertUser($nom, $email = null, $motPasse, $remediation, $idGroupe) : int | false{
+    public function insertUser() : int | false{
 
-        $motPasse = password_hash($motPasse, PASSWORD_DEFAULT);
+        $this->motPasse = password_hash($this->motPasse, PASSWORD_DEFAULT);
 
-        if($email == null){
+        if($this->email == ""){
 
             $query = "INSERT INTO `Utilisateur` (`Utilisateur`.`nom_utilisateur`, `Utilisateur`.`mot_passe`, `Utilisateur`.`remediation` `Utilisateur`.`id_groupe`, `Utilisateur`.`id_role`)
             VALUES (:nomUtilisateur, :motPasse, :remediation, :idGroupe, 1);";
 
             $param = [
 
-                ":nomUtilisateur" => $nom,
-                ":email" => $email,
-                ":motPasse" => $motPasse,
-                ":remediation" => $remediation,
-                ":idGroupe" => $idGroupe
+                ":nomUtilisateur" => $this->nomUtilisateur,
+                ":motPasse" => $this->motPasse,
+                ":remediation" => $this->remediation,
+                ":idGroupe" => $this->idGroupe
 
             ];
 
         }
         else{
 
-            $query = "INSERT INTO `Utilisateur` (`Utilisateur`.`nom_utilisateur`, `Utilisateur`.`mot_passe`, `Utilisateur`.`remediation` `Utilisateur`.`id_groupe`, `Utilisateur`.`id_role`)
+            $query = "INSERT INTO `Utilisateur` (`Utilisateur`.`nom_utilisateur`, `Utilisateur`.`email` `Utilisateur`.`mot_passe`, `Utilisateur`.`remediation` `Utilisateur`.`id_groupe`, `Utilisateur`.`id_role`)
             VALUES (:nomUtilisateur, :email, :motPasse, :remediation, :idGroupe, 2);";
 
             $param = [
 
-                ":nomUtilisateur" => $nom,
-                ":email" => $email,
-                ":motPasse" => $motPasse,
-                ":remediation" => $remediation,
-                ":idGroupe" => $idGroupe
+                ":nomUtilisateur" => $this->nomUtilisateur,
+                ":email" => $this->email,
+                ":motPasse" => $this->motPasse,
+                ":remediation" => $this->remediation,
+                ":idGroupe" => $this->idGroupe
 
             ];
 

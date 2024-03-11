@@ -16,7 +16,7 @@ use Projet\Budgetmanager\model\UserModel as UserModel;
 
 class UserCtrl {
 
-    public function creatAdmin($nom, $email, $motPasse, $remediation, $idGroupe){
+    public function creatAdmin($nom, $email, $motPasse, $remediation, $idGroupe) : int | array{
 
         $error = [];
 
@@ -34,7 +34,7 @@ class UserCtrl {
         
         if($motPasse == "" || strlen($motPasse) < 5 || strlen($motPasse) > 50 || !$motPasse){
 
-            $error["motPasse"] = "Le mot de passe que vous essayez d'utiliser n'est pas valide. Il dois être plus grand que 5 et plus petit que 50.";
+            $error["mot de passe"] = "Le mot de passe que vous essayez d'utiliser n'est pas valide. Il dois être plus grand que 5 et plus petit que 50.";
 
         }
 
@@ -60,7 +60,20 @@ class UserCtrl {
                 "id_groupe" => $idGroupe
             ]);
 
-            return $user->creatUser();
+            $resulta = $user->insertUser();
+
+            if(!$resulta){
+
+                $error["insertion"] = "Un problème est survenu lors de la création de votre compte veillez réessayer.";
+
+                return $error;
+
+            }
+            else{
+
+                return $resulta;
+
+            }
 
         }
         
@@ -68,9 +81,102 @@ class UserCtrl {
 
     }
 
-    public function creatMember(){
+    public function creatMember($nom, $motPasse, $remediation, $idGroupe) : int | array{
 
+        $error = [];
 
+        if($nom == "" || strlen($nom) < 3 || strlen($nom) > 100 || !$nom){
+
+            $error["nom"] = "Le nom que vous essayer d'utiliser n'est pas valide. Il dois être plus grand que 3 et plus petit que 100.";
+
+        }
+        
+        if($motPasse == "" || strlen($motPasse) < 5 || strlen($motPasse) > 50 || !$motPasse){
+
+            $error["mot de passe"] = "Le mot de passe que vous essayez d'utiliser n'est pas valide. Il dois être plus grand que 5 et plus petit que 50.";
+
+        }
+
+        if($remediation <= 0 || $remediation > 29){
+
+            $error["remediation"] = "La remediation que vous essayer d'utiliser n'est pas valide. Elle dois être plus grand que 0 et plus petit que 29.";
+
+        }
+
+        if($idGroupe <= 0){
+
+            $error["groupe"] = "Le groupe que vous essayer d'utiliser ne peut pas existez.";
+
+        }
+
+        if(empty($error)){
+
+            $user = new UserModel($init = [ 
+                "nom_utilisateur" => $nom,
+                "mot_passe" => password_hash($motPasse, PASSWORD_DEFAULT),
+                "remediation" => $remediation,
+                "id_groupe" => $idGroupe
+            ]);
+
+            $resulta = $user->insertUser();
+
+            if(!$resulta){
+
+                $error["insertion"] = "Un problème est survenu lors de la création de votre compte veillez réessayer.";
+
+                return $error;
+
+            }
+            else{
+
+                return $resulta;
+
+            }
+
+        }
+        
+        return $error;
+
+    }
+
+    public function checkLogin($nom, $motPasse) : UserModel | array {
+
+        $error = [];
+
+        if($nom == "" || strlen($nom) < 3 || strlen($nom) > 100 || !$nom){
+
+            $error["nom"] = "Le nom que vous essayer d'utiliser ne peux pas exister. Il dois être plus grand que 3 et plus petit que 100.";
+
+        }
+
+        if($motPasse == "" || strlen($motPasse) < 5 || strlen($motPasse) > 50 || !$motPasse){
+
+            $error["mot de passe"] = "Le mot de passe que vous essayez d'utiliser ne peux pas exister. Il dois être plus grand que 5 et plus petit que 50.";
+
+        }
+
+        if(empty($error)){
+
+            $user = UserModel::verifyPassword($nom, $motPasse);
+
+            if(!$user){
+
+                $error["login"] = "Le compte que vous essayer d'utiliser n'existe pas ou le mot de passe que vous avez rentrez n'est pas le bon veuillez réessayez.";
+                return $error;
+
+            }
+            else{
+
+                return $user;
+
+            }
+
+        }
+        else{
+
+            return $error;
+
+        }
 
     }
 
