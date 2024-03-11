@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS Categorie (
 
 CREATE TABLE IF NOT EXISTS Depense (
 	id_depense INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
-    nom_depense VARCHAR(100) NOT NULL UNIQUE,
+    nom_depense VARCHAR(100) NOT NULL,
     montant DOUBLE NOT NULL,
     date DATE NOT NULL,
     id_categorie INT NOT NULL,
