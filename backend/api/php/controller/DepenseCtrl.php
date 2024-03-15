@@ -67,7 +67,19 @@ class DepenseCtrl {
         return $error;
     }
 
-    public function modifyDepense($id, $nom, $montant, $date, $idCategorie) {
+    public function readDepense() {
+        $depense = DepenseModel::selectDepense();
+
+        if(!$depense){
+            $error["read"] = "La dépense que vous essayez de lire n'existe pas, veuillez réessayer.";
+            return $error;
+        }
+        else{
+            return $depense;
+        }
+    }
+
+    public function updateDepense($id, $nom, $montant, $date, $idCategorie, $idUtilisateur) {
         $error = [];
 
         if ($nom == "" || strlen($nom) >= 100 || strlen($nom) <= 3 || !$nom){
