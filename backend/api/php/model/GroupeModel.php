@@ -71,4 +71,14 @@ class GroupeModel extends BaseModel {
 
     }
 
+    public function insertGroupe() : int | false {
+
+        $query = "INSERT INTO `Groupe` (`Groupe`.`impots`, `Groupe`.`loyer`, `Groupe`.`credit`, `Groupe`.`mois_budget`) 
+        VALUES (0.0, 0.0, 0.0, 0)";
+
+        Database::getDB()->run($query);
+        return DataBase::getDB()->lastInsertId();
+
+    }
+
 }
