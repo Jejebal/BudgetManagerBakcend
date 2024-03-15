@@ -120,7 +120,7 @@ class UserCtrl {
 
             $resulta = $user->insertUser();
 
-            if(!$resulta){
+            if(!$resultat){
 
                 $error["insertion"] = "Un problème est survenu lors de la création de votre compte veuillez réessayer.";
 
@@ -129,7 +129,7 @@ class UserCtrl {
             }
             else{
 
-                return $resulta;
+                return $resultat;
 
             }
 
