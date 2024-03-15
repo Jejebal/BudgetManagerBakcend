@@ -10,7 +10,7 @@
  * 
  */
 
-namespace Projet\Budgetmanager\model;
+namespace Projet\Budgetmanager\api\php\model;
 
 use PDOStatement;
 

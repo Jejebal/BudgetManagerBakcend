@@ -10,11 +10,11 @@
  * 
  */
 
-namespace Projet\Budgetmanager\model;
+namespace Projet\Budgetmanager\api\php\model;
 
-use Projet\Budgetmanager\model\BaseModel as BaseModel;
+use Projet\Budgetmanager\api\php\model\BaseModel as BaseModel;
 
-use Projet\Budgetmanager\model\Database as Database;
+use Projet\Budgetmanager\api\php\model\Database as Database;
 
 class CategorieModel extends BaseModel {
 

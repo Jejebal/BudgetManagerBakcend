@@ -10,11 +10,11 @@
  * 
  */
 
-namespace Projet\Budgetmanager\model;
+namespace Projet\Budgetmanager\api\php\model;
 
-use Projet\Budgetmanager\model\BaseModel as BaseModel;
+use Projet\Budgetmanager\api\php\model\BaseModel as BaseModel;
 
-use Projet\Budgetmanager\model\Database as Database;
+use Projet\Budgetmanager\api\php\model\Database as Database;
 
 class GroupeModel extends BaseModel {
 
@@ -71,7 +71,7 @@ class GroupeModel extends BaseModel {
 
     }
 
-    public function insertGroupe() : int | false {
+    public static function insertGroupe() : int | false {
 
         $query = "INSERT INTO `Groupe` (`Groupe`.`impots`, `Groupe`.`loyer`, `Groupe`.`credit`, `Groupe`.`mois_budget`) 
         VALUES (0.0, 0.0, 0.0, 0)";

@@ -12,11 +12,11 @@
 
 namespace Projet\Budgetmanager\controller;
 
-use Projet\Budgetmanager\model\UserModel as UserModel;
+use Projet\Budgetmanager\api\php\model\UserModel as UserModel;
 
 class UserCtrl {
 
-    public function createAdmin($nom, $email, $motPasse, $remediation, $idGroupe) : int | array{
+    public function createAdmin($nom, $email, $motPasse, $remediation, $idGroupe) : UserModel | array{
 
         $error = [];
 
@@ -69,11 +69,8 @@ class UserCtrl {
                 return $error;
 
             }
-            else{
 
-                return $resultat;
-
-            }
+            return UserModel::selectUserByUsername($resultat);
 
         }
         
@@ -81,7 +78,7 @@ class UserCtrl {
 
     }
 
-    public function createMember($nom, $motPasse, $remediation, $idGroupe) : int | array{
+    public function createMember($nom, $motPasse, $remediation, $idGroupe) : UserModel | array{
 
         $error = [];
 
@@ -118,7 +115,7 @@ class UserCtrl {
                 "id_groupe" => $idGroupe
             ]);
 
-            $resulta = $user->insertUser();
+            $resultat = $user->insertUser();
 
             if(!$resultat){
 
@@ -127,11 +124,8 @@ class UserCtrl {
                 return $error;
 
             }
-            else{
-
-                return $resultat;
-
-            }
+            
+            return UserModel::selectUserByUsername($resultat);
 
         }
         

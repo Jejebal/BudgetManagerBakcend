@@ -3,7 +3,7 @@
     "description": "Une application de gestion de budget et de dépenses monétaire.",
     "autoload": {
         "psr-4": {
-            "Projet\\Budgetmanager\\": "src/"
+            "Projet\\Budgetmanager\\": "backend/"
         }
     },
     "authors": [

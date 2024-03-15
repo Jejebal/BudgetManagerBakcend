@@ -12,7 +12,7 @@
 
 namespace Projet\Budgetmanager\controller;
 
-use Projet\Budgetmanager\model\DepenseModel as DepenseModel;
+use Projet\Budgetmanager\api\php\model\DepenseModel as DepenseModel;
 
 class DepenseCtrl {
 
@@ -31,7 +31,9 @@ class DepenseCtrl {
 
         }
 
-        if ($date == "" || !validateDate($date, 'd-m-Y') || !$date){
+        $dateSeparer = explode("-", $date);
+
+        if ($date == "" || !checkdate($dateSeparer[1], $dateSeparer[2], $dateSeparer[0]) || !$date){
             $error["date"] = "Veuillez saisir une date correcte dans le format d-m-Y, exemple : 15-03-2024.";
         }
 
@@ -65,7 +67,7 @@ class DepenseCtrl {
         return $error;
     }
 
-    public function modifyDepense($nom, $montant, $date, $idCategorie, $idUtilisateur) {
+    public function modifyDepense($id, $nom, $montant, $date, $idCategorie) {
         $error = [];
 
         if ($nom == "" || strlen($nom) >= 100 || strlen($nom) <= 3 || !$nom){
@@ -80,13 +82,15 @@ class DepenseCtrl {
 
         }
 
-        if ($date == "" || !validateDate($date, 'd-m-Y') || !$date){
+        $dateSeparer = explode("-", $date);
+
+        if ($date == "" || !checkdate($dateSeparer[1], $dateSeparer[2], $dateSeparer[0]) || !$date){
             $error["date"] = "Veuillez saisir une date correcte dans le format d-m-Y, exemple : 15-03-2024.";
         }
 
         if(empty($error)){
 
-            $depense = DepenseModel::updateDepense($nom, $montant, $date, $idCategorie);
+            $depense = DepenseModel::updateDepense($id, $nom, $montant, $date, $idCategorie);
 
             if (!$depense) {
                 $error["modification"] = "Un problème est survenu lors de la modification de votre dépense veuillez réessayer.";
@@ -101,8 +105,9 @@ class DepenseCtrl {
         return $error;
     }
 
-    public function deleteDepense() {
-        $depense = DepenseModel::deleteDepense();
+    public function deleteDepense($id) {
+
+        $depense = DepenseModel::deleteDepense($id);
 
         if(!$depense){
             $error["delete"] = "La dépense que vous essayez de supprimer n'existe pas, veuillez réessayer.";

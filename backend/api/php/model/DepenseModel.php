@@ -10,11 +10,11 @@
  * 
  */
 
-namespace Projet\Budgetmanager\model;
+namespace Projet\Budgetmanager\api\php\model;
 
 use PDOException;
-use Projet\Budgetmanager\model\BaseModel as BaseModel;
-use Projet\Budgetmanager\model\Database;
+use Projet\Budgetmanager\api\php\model\BaseModel as BaseModel;
+use Projet\Budgetmanager\api\php\model\Database;
 
 class DepenseModel extends BaseModel {
 

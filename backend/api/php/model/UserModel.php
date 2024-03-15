@@ -10,10 +10,10 @@
  * 
  */
 
-namespace Projet\Budgetmanager\model;
+namespace Projet\Budgetmanager\api\php\model;
 
-use Projet\Budgetmanager\model\BaseModel as BaseModel;
-use Projet\Budgetmanager\model\Database;
+use Projet\Budgetmanager\api\php\model\BaseModel as BaseModel;
+use Projet\Budgetmanager\api\php\model\Database;
 
 class UserModel extends BaseModel {
 
@@ -98,7 +98,7 @@ class UserModel extends BaseModel {
 
     }
 
-    public function insertUser() : int | false{
+    public function insertUser() : string | false{
 
         $this->motPasse = password_hash($this->motPasse, PASSWORD_DEFAULT);
 
@@ -135,7 +135,7 @@ class UserModel extends BaseModel {
         }
 
         Database::getDB()->run($query, $param);
-        return DataBase::getDB()->lastInsertId();
+        return $this->nomUtilisateur;
 
     }
 

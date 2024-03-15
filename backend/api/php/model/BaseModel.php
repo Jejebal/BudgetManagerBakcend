@@ -10,9 +10,9 @@
  * 
  */
 
-namespace Projet\Budgetmanager\model;
+ namespace Projet\Budgetmanager\api\php\model;
 
-use Projet\Budgetmanager\model\Database;
+use Projet\Budgetmanager\api\php\model\Database;
 
 class BaseModel {
 
