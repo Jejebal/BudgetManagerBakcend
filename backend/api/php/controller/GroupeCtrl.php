@@ -10,7 +10,7 @@
  * 
  */
 
-namespace Projet\Budgetmanager\controller;
+namespace Projet\Budgetmanager\api\php\controller;
 
 use Projet\Budgetmanager\api\php\model\GroupeModel as GroupeModel;
 

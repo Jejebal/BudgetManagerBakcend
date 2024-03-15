@@ -10,16 +10,13 @@
  * 
  */
 
-use Projet\Budgetmanager\controller\GroupeCtrl;
-use Projet\Budgetmanager\controller\UserCtrl;
-use Projet\Budgetmanager\model\GroupeModel;
+use Projet\Budgetmanager\api\php\controller\GroupeCtrl;
+use Projet\Budgetmanager\api\php\controller\UserCtrl;
 
 header('Content-type: application/json; charset=utf-8');
 
 require_once("../php/constantes.php");
 require_once("../php/fonction.php");
-require_once("../php/controller/UserCtrl.php");
-require_once("../php/controller/GroupeCtrl.php");
 
 $error = [];
 $userCtrl = new UserCtrl();
@@ -73,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         else{
 
-            $user = $userCtrl->creatMember($nom, $motPasse, $remediation, $groupeId);
+            $user = $userCtrl->createMember($nom, $motPasse, $remediation, $groupeId);
 
             echo(json_encode($user));
 
@@ -106,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         else{
 
-            $user = $userCtrl->creatAdmin($nom, $email, $motPasse, $remediation, $groupeId);
+            $user = $userCtrl->createAdmin($nom, $email, $motPasse, $remediation, $groupeId);
 
             echo(json_encode($user));
 

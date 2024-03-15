@@ -10,7 +10,7 @@
  * 
  */
 
-namespace Projet\Budgetmanager\controller;
+namespace Projet\Budgetmanager\api\php\controller;
 
 use Projet\Budgetmanager\api\php\model\DepenseModel as DepenseModel;
 
@@ -67,8 +67,9 @@ class DepenseCtrl {
         return $error;
     }
 
-    public function readDepense() {
-        $depense = DepenseModel::selectDepense();
+    public function readDepense($idUtilisateur) {
+
+        $depense = DepenseModel::selectAllDepenseByUser($idUtilisateur);
 
         if(!$depense){
             $error["read"] = "La dépense que vous essayez de lire n'existe pas, veuillez réessayer.";
@@ -77,6 +78,7 @@ class DepenseCtrl {
         else{
             return $depense;
         }
+        
     }
 
     public function updateDepense($id, $nom, $montant, $date, $idCategorie, $idUtilisateur) {
