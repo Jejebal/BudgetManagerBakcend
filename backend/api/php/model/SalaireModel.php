@@ -67,15 +67,15 @@ class SalaireModel extends BaseModel {
 
     }
 
-    public static function selectSalaire($id){
+    public static function selectSalaire($idUtilisateur){
 
         $query = "SELECT *
         FROM `Salaire`
-        WHERE `Salaire`.`id_salaire` = :idSalaire;";
+        WHERE `Salaire`.`id_utilisateur` = :idUtilisateur;";
 
         $param = [
 
-            ":idSalaire" => $id
+            ":idUtilisateur" => $idUtilisateur
 
         ];
 
