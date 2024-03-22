@@ -38,7 +38,17 @@ class CategorieModel extends BaseModel {
         
     }
 
-    public static function selectCategorie($id){
+    public static function selectAllCategorie(){
+
+        $query = "SELECT * FROM `Categorie`;";
+
+        $statement = DataBase::getDB()->run($query, $param);
+        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
+        return $statement->fetch();
+
+    }
+
+    public static function selectCategorieById($id){
 
         $query = "SELECT *
         FROM `Categorie`
