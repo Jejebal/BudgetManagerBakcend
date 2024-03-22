@@ -29,8 +29,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $nom = "";
     $email = "";
     $motPasse = "";
-    $remediation = "";
-    $idGroupe = "";
+    $remediation = 0;
+    $idGroupe = 0;
 
     $donnees = recuperDonner();
 

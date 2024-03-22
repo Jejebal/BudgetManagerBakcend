@@ -100,17 +100,5 @@
         
         return $error;
     }
- 
-    public function deleteSalaire($id) {
-
-        $salaire = SalaireModel::deleteSalaire($id);
-
-        if(!$salaire){
-            $error["delete"] = "Le salaire que vous essayez de supprimer n'existe pas, veuillez réessayer.";
-            return $error;
-        }
-        else{
-            return $salaire;
-        }
-    }
+    
  }
