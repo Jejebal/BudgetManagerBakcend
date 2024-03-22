@@ -10,9 +10,9 @@
  * 
  */
 
-namespace Projet\Budgetmanager\controller;
+namespace Projet\Budgetmanager\api\php\controller;
 
-use Projet\Budgetmanager\api\php\model\UserModel as UserModel;
+use Projet\Budgetmanager\api\php\model\UserModel;
 
 class UserCtrl {
 
@@ -52,25 +52,33 @@ class UserCtrl {
 
         if(empty($error)){
 
-            $user = new UserModel($init = [ 
-                "nom_utilisateur" => $nom,
-                "email" => $email,
-                "mot_passe" => password_hash($motPasse, PASSWORD_DEFAULT),
-                "remediation" => $remediation,
-                "id_groupe" => $idGroupe
-            ]);
+            if(!UserModel::selectUserByUsername($nom)){
 
-            $resultat = $user->insertUser();
-
-            if(!$resultat){
-
-                $error["insertion"] = "Un problème est survenu lors de la création de votre compte veuillez réessayer.";
-
-                return $error;
+                $user = new UserModel($init = [ 
+                    "nom_utilisateur" => $nom,
+                    "email" => $email,
+                    "mot_passe" => $motPasse,
+                    "remediation" => $remediation,
+                    "id_groupe" => $idGroupe
+                ]);
+    
+                $resultat = $user->insertUser();
+    
+                if(!$resultat){
+    
+                    $error["insertion"] = "Un problème est survenu lors de la création de votre compte veuillez réessayer.";
+    
+                    return $error;
+    
+                }
+    
+                return UserModel::selectUserByUsername($resultat);
 
             }
 
-            return UserModel::selectUserByUsername($resultat);
+            $error["user"] = "Le nom d'utilisateur que vous essayez de créer existe déjà.";
+
+            return $error;
 
         }
         

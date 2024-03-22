@@ -65,7 +65,7 @@ class UserModel extends BaseModel {
         
         $query = "SELECT *
         FROM `Utilisateur`
-        WHERE `Utilisateur`.`nomUtilisateur` = :nomUtilisateur;";
+        WHERE `Utilisateur`.`nom_utilisateur` = :nomUtilisateur;";
 
         $param = [
 
@@ -104,7 +104,7 @@ class UserModel extends BaseModel {
 
         if($this->email == ""){
 
-            $query = "INSERT INTO `Utilisateur` (`Utilisateur`.`nom_utilisateur`, `Utilisateur`.`mot_passe`, `Utilisateur`.`remediation` `Utilisateur`.`id_groupe`, `Utilisateur`.`id_role`)
+            $query = "INSERT INTO `Utilisateur` (`Utilisateur`.`nom_utilisateur`, `Utilisateur`.`mot_passe`, `Utilisateur`.`remediation`, `Utilisateur`.`id_groupe`, `Utilisateur`.`id_role`)
             VALUES (:nomUtilisateur, :motPasse, :remediation, :idGroupe, 1);";
 
             $param = [
@@ -119,7 +119,7 @@ class UserModel extends BaseModel {
         }
         else{
 
-            $query = "INSERT INTO `Utilisateur` (`Utilisateur`.`nom_utilisateur`, `Utilisateur`.`email` `Utilisateur`.`mot_passe`, `Utilisateur`.`remediation` `Utilisateur`.`id_groupe`, `Utilisateur`.`id_role`)
+            $query = "INSERT INTO `Utilisateur` (`Utilisateur`.`nom_utilisateur`, `Utilisateur`.`email`, `Utilisateur`.`mot_passe`, `Utilisateur`.`remediation`, `Utilisateur`.`id_groupe`, `Utilisateur`.`id_role`)
             VALUES (:nomUtilisateur, :email, :motPasse, :remediation, :idGroupe, 2);";
 
             $param = [
@@ -136,7 +136,7 @@ class UserModel extends BaseModel {
 
         Database::getDB()->run($query, $param);
         return $this->nomUtilisateur;
-
+                      
     }
 
 

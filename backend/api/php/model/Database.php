@@ -14,8 +14,6 @@ namespace Projet\Budgetmanager\api\php\model;
 
 use PDOStatement;
 
-require_once("../../secret.php");
-
 class Database {
 
     /**

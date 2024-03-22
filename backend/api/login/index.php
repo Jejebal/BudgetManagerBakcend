@@ -10,13 +10,15 @@
  * 
  */
 
-use Projet\Budgetmanager\api\php\controller\GroupeCtrl;
-use Projet\Budgetmanager\api\php\controller\UserCtrl;
-
 header('Content-type: application/json; charset=utf-8');
 
 require_once("../php/constantes.php");
 require_once("../php/fonction.php");
+require_once("../../../vendor/autoload.php");
+require_once("../../secret.php");
+
+use Projet\Budgetmanager\api\php\controller\UserCtrl;
+use Projet\Budgetmanager\api\php\controller\GroupeCtrl;
 
 $error = [];
 $userCtrl = new UserCtrl();

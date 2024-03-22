@@ -10,7 +10,7 @@
  * 
  */
 
- namespace Projet\Budgetmanager\api\php\model;
+namespace Projet\Budgetmanager\api\php\model;
 
 use Projet\Budgetmanager\api\php\model\Database;
 
