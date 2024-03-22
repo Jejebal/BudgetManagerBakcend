@@ -71,8 +71,12 @@ class UserCtrl {
                     return $error;
     
                 }
+
+                $user = UserModel::selectUserByUsername($resultat);
+
+                $user->motPasse = "";
     
-                return UserModel::selectUserByUsername($resultat);
+                return $user;
 
             }
 
@@ -133,7 +137,11 @@ class UserCtrl {
 
             }
             
-            return UserModel::selectUserByUsername($resultat);
+            $user = UserModel::selectUserByUsername($resultat);
+
+            $user->motPasse = "";
+    
+            return $user;
 
         }
         

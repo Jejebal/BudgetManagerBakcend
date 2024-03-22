@@ -32,7 +32,7 @@ class UserModel extends BaseModel {
 
     public string $nomUtilisateur;
 
-    public string $email;
+    public ?string $email;
 
     public string $motPasse;
 
@@ -102,7 +102,7 @@ class UserModel extends BaseModel {
 
         $this->motPasse = password_hash($this->motPasse, PASSWORD_DEFAULT);
 
-        if($this->email == ""){
+        if($this->email == null){
 
             $query = "INSERT INTO `Utilisateur` (`Utilisateur`.`nom_utilisateur`, `Utilisateur`.`mot_passe`, `Utilisateur`.`remediation`, `Utilisateur`.`id_groupe`, `Utilisateur`.`id_role`)
             VALUES (:nomUtilisateur, :motPasse, :remediation, :idGroupe, 1);";

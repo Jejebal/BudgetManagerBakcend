@@ -38,6 +38,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $email = array_key_exists("email", $donnees) ? filter_var($donnees["email"], FILTER_VALIDATE_EMAIL) : null;
     $motPasse = array_key_exists("motPasse", $donnees) ? filter_var($donnees["motPasse"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
     $remediation = array_key_exists("remediation", $donnees) ? filter_var($donnees["remediation"], FILTER_VALIDATE_INT) : null;
+    $idGroupe = array_key_exists("idGroupe", $donnees) ? filter_var($donnees["idGroupe"], FILTER_VALIDATE_INT) : null;
 
     if($nom != null && $email == null && $motPasse != null && $remediation == null && $idGroupe == null){
 
@@ -59,35 +60,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
 
     }
-    else if($nom != null && $email == null && $motPasse != null && $remediation != null){
+    else if($nom != null && $email == null && $motPasse != null && $remediation != null && $idGroupe != null){
 
-        $groupeId = $groupeCtrl->createGroupe();
+        $user = $userCtrl->createMember($nom, $motPasse, $remediation, $idGroupe);
 
-        if(is_array($groupeId)){
+        echo(json_encode($user));
 
-            echo(json_encode($groupeId));
-            http_response_code(SERVEUR_PROBLEME);
+        if(is_array($user)){
+
+            http_response_code(INCOMPLET);
             die();
 
         }
         else{
 
-            $user = $userCtrl->createMember($nom, $motPasse, $remediation, $groupeId);
-
-            echo(json_encode($user));
-
-            if(is_array($user)){
-
-                http_response_code(INCOMPLET);
-                die();
-
-            }
-            else{
-
-                http_response_code(CREE_RESSOURCE);
-                die();
-
-            }
+            http_response_code(CREE_RESSOURCE);
+            die();
 
         }
 
