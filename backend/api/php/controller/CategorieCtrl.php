@@ -32,7 +32,7 @@ class CategorieCtrl {
 
     public function readAllCategorie() {
 
-        $categorie = CategorieModel::selectCategorie();
+        $categorie = CategorieModel::selectAllCategorie();
 
         if(!$categorie){
             $error["read"] = "Une erreur est survenue, veuillez réessayer.";

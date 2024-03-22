@@ -87,11 +87,18 @@ class GroupeCtrl {
             }
             else{
 
-                $groupe->updateGroupe();
+                $groupe->impots = $impot;
+                $groupe->loyer = $loyer;
+                $groupe->credit = $credits;
+                $groupe->moisBudget = $moisBudget;
 
-                if($groupe){
+                $resulta = $groupe->updateGroupe();
 
-                    return $groupe;
+                var_dump($resulta);
+
+                if(is_int($resulta)){
+
+                    return GroupeModel::selectGroupe($resulta);
 
                 }
                 else{

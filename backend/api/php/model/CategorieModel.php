@@ -42,7 +42,7 @@ class CategorieModel extends BaseModel {
 
         $query = "SELECT * FROM `Categorie`;";
 
-        $statement = DataBase::getDB()->run($query, $param);
+        $statement = DataBase::getDB()->run($query);
         $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
         return $statement->fetch();
 

@@ -82,19 +82,19 @@ class GroupeModel extends BaseModel {
 
     }
 
-    public function updateGroupe() : true | PDOException {
+    public function updateGroupe() : int | PDOException {
 
         $query = "UPDATE `Groupe`
-        SET  `Groupe`.`impots` = :impots, `Groupe`.`loyer` = :loyer, `Groupe`.`credit` = :credit, `Groupe`.`credit` = :mois_budget
+        SET  `Groupe`.`impots` = :impots, `Groupe`.`loyer` = :loyer, `Groupe`.`credit` = :credit, `Groupe`.`mois_budget` = :moisBudget
         WHERE `Groupe`.`id_groupe` = :idGroupe;";
 
         $param = [
 
-            ":idGroupe" => $this->idGroupe,
             ":impots" => $this->impots,
             ":loyer" => $this->loyer,
             ":credit" => $this->credit,
-            ":mois_budget" => $this->moisBudget
+            ":moisBudget" => $this->moisBudget,
+            ":idGroupe" => $this->idGroupe
 
         ];
 
@@ -102,7 +102,7 @@ class GroupeModel extends BaseModel {
 
             DataBase::getDB()->run($query, $param);
 
-            return true;
+            return $this->idGroupe;
 
         }
         catch(PDOException $exception){
