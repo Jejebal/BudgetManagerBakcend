@@ -12,6 +12,7 @@
 
 namespace Projet\Budgetmanager\api\php\model;
 
+use PDOException;
 use Projet\Budgetmanager\api\php\model\BaseModel as BaseModel;
 use Projet\Budgetmanager\api\php\model\Database;
 
@@ -134,8 +135,18 @@ class UserModel extends BaseModel {
 
         }
 
-        Database::getDB()->run($query, $param);
-        return $this->nomUtilisateur;
+        try{
+
+            Database::getDB()->run($query, $param);
+
+            return $this->nomUtilisateur;
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
                       
     }
 
