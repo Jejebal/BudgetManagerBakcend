@@ -52,6 +52,8 @@ class DepenseModel extends BaseModel {
         $this->date = $init["date"] ?? "";
 
         $this->idCategorie = $init["id_categorie"] ?? -1;
+
+        $this->idUtilisateur = $init["id_utilisateur"] ?? -1;
         
     }
 
