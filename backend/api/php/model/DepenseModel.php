@@ -52,10 +52,13 @@ class DepenseModel extends BaseModel {
         $this->date = $init["date"] ?? "";
 
         $this->idCategorie = $init["id_categorie"] ?? -1;
+
+        $this->idUtilisateur = $init["id_utilisateur"] ?? -1;
         
     }
 
     public function insertDepense(){
+        var_dump($this);
 
         $query = "INSERT INTO `Depense`
         (`Depense`.`nom_depense`, `Depense`.`montant`, `Depense`.`date`, `Depense`.`id_categorie`, `Depense`.`id_utilisateur`)
