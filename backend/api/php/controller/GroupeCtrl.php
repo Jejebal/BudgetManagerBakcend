@@ -141,6 +141,8 @@ class GroupeCtrl {
 
         }
 
+        return $error;
+
     }
 
 }
