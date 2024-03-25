@@ -16,7 +16,7 @@ use Projet\Budgetmanager\api\php\model\UserModel;
 
 class UserCtrl {
 
-    public function createAdmin($nom, $email, $motPasse, $remediation, $idGroupe) : UserModel | array{
+    public function createAdmin($nom, $email, $motPasse, $remediation, $idGroupe) : UserModel | array {
 
         $error = [];
 
@@ -52,9 +52,11 @@ class UserCtrl {
 
         if(empty($error)){
 
-            if(!UserModel::selectUserByUsername($nom)){
+            $result = UserModel::selectUserByUsername($nom);
 
-                $user = new UserModel($init = [ 
+            if(!is_a($result, "Projet\Budgetmanager\api\php\model\UserModel")){
+
+                $user = new UserModel([ 
                     "nom_utilisateur" => $nom,
                     "email" => $email,
                     "mot_passe" => $motPasse,
@@ -64,7 +66,7 @@ class UserCtrl {
     
                 $resultat = $user->insertUser();
     
-                if(!$resultat){
+                if(!is_string($resultat)){
     
                     $error["insertion"] = "Un problème est survenu lors de la création de votre compte veuillez réessayer.";
     
@@ -73,6 +75,14 @@ class UserCtrl {
                 }
 
                 $user = UserModel::selectUserByUsername($resultat);
+
+                if(!is_a($user, "Projet\Budgetmanager\api\php\model\UserModel")){
+
+                    $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
+    
+                    return $error;
+
+                }
 
                 $user->motPasse = "";
     
@@ -120,7 +130,7 @@ class UserCtrl {
 
         if(empty($error)){
 
-            $user = new UserModel($init = [ 
+            $user = new UserModel([ 
                 "nom_utilisateur" => $nom,
                 "mot_passe" => password_hash($motPasse, PASSWORD_DEFAULT),
                 "remediation" => $remediation,
@@ -129,7 +139,7 @@ class UserCtrl {
 
             $resultat = $user->insertUser();
 
-            if(!$resultat){
+            if(!is_string($resultat)){
 
                 $error["insertion"] = "Un problème est survenu lors de la création de votre compte veuillez réessayer.";
 
@@ -139,8 +149,16 @@ class UserCtrl {
             
             $user = UserModel::selectUserByUsername($resultat);
 
+            if(!is_a($user, "Projet\Budgetmanager\api\php\model\UserModel")){
+
+                $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
+
+                return $error;
+
+            }
+
             $user->motPasse = "";
-    
+
             return $user;
 
         }

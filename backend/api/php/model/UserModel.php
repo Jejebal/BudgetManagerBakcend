@@ -62,7 +62,7 @@ class UserModel extends BaseModel {
 
     }
 
-    public static function selectUserByUsername($nom) : UserModel | false{
+    public static function selectUserByUsername($nom) : UserModel | false | PDOException {
         
         $query = "SELECT *
         FROM `Utilisateur`
@@ -74,15 +74,30 @@ class UserModel extends BaseModel {
 
         ];
 
-        $statement = Database::getDB()->run($query, $param);
-        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, static::class);
-        return $statement->fetch();
+        try {
+
+            $statement = Database::getDB()->run($query, $param);
+            $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, static::class);
+            return $statement->fetch();
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
 
     }
     
     public static function verifyPassword($nom, $motPasse) : UserModel | false{
 
         $user = UserModel::selectUserByUsername($nom);
+
+        if(!$user || !is_a($user, "Projet\Budgetmanager\api\php\model\UserModel")){
+
+            return false;
+
+        }
 
         if(password_verify($motPasse, $user->motPasse)){
 
@@ -99,7 +114,7 @@ class UserModel extends BaseModel {
 
     }
 
-    public function insertUser() : string | false{
+    public function insertUser() : int | PDOException {
 
         $this->motPasse = password_hash($this->motPasse, PASSWORD_DEFAULT);
 

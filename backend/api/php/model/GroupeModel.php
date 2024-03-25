@@ -54,7 +54,7 @@ class GroupeModel extends BaseModel {
         
     }
 
-    public static function selectGroupe($id) : GroupeModel | false{
+    public static function selectGroupe($id) : GroupeModel | false | PDOException {
 
         $query = "SELECT *
         FROM `Groupe`
@@ -66,19 +66,37 @@ class GroupeModel extends BaseModel {
 
         ];
 
-        $statement = DataBase::getDB()->run($query, $param);
-        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
-        return $statement->fetch();
+        try {
+
+            $statement = DataBase::getDB()->run($query, $param);
+            $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
+            return $statement->fetch();
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
 
     }
 
-    public static function insertGroupe() : int | false {
+    public static function insertGroupe() : int | false | PDOException {
 
         $query = "INSERT INTO `Groupe` (`Groupe`.`impots`, `Groupe`.`loyer`, `Groupe`.`credit`, `Groupe`.`mois_budget`) 
-        VALUES (0.0, 0.0, 0.0, " . date("Y-m-d") . ");";
+        VALUES (0.0, 0.0, 0.0, 0);";
 
-        Database::getDB()->run($query);
-        return DataBase::getDB()->lastInsertId();
+        try{
+
+            Database::getDB()->run($query);
+            return DataBase::getDB()->lastInsertId();
+
+        }
+        catch(PDOException $exceptiom){
+
+            return $exceptiom;
+
+        }
 
     }
 

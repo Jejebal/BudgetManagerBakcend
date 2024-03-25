@@ -12,6 +12,7 @@
 
 namespace Projet\Budgetmanager\api\php\model;
 
+use PDOException;
 use Projet\Budgetmanager\api\php\model\BaseModel as BaseModel;
 
 use Projet\Budgetmanager\api\php\model\Database as Database;
@@ -48,7 +49,7 @@ class SalaireModel extends BaseModel {
         
     }
 
-    public function insertSalaire(){
+    public function insertSalaire() : int | false | PDOException {
 
         $query = "INSERT INTO `Salaire`
         (`somme`, `mois_salaire`, `id_utilisateur`)
@@ -62,12 +63,21 @@ class SalaireModel extends BaseModel {
 
         ];
 
-        $statement = DataBase::getDB()->run($query, $param);
-        return DataBase::getDB()->lastInsertId();
+        try {
+
+            $statement = DataBase::getDB()->run($query, $param);
+            return DataBase::getDB()->lastInsertId();
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
 
     }
 
-    public static function selectSalaire($idUtilisateur){
+    public static function selectSalaire($idUtilisateur) : SalaireModel | false | PDOException {
 
         $query = "SELECT *
         FROM `Salaire`
@@ -80,13 +90,22 @@ class SalaireModel extends BaseModel {
 
         ];
 
-        $statement = DataBase::getDB()->run($query, $param);
-        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
-        return $statement->fetch();
+        try {
+
+            $statement = DataBase::getDB()->run($query, $param);
+            $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
+            return $statement->fetch();
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
 
     }
 
-    public static function updateSalaire($id, $somme, $moisSalaire, $idUtilisateur){
+    public function updateSalaire() : int | PDOException {
 
         $query = "UPDATE `Salaire`
         SET `somme` = :somme, `mois_salaire` = :moisSalaire, `id_utilisateur` = :idUtilisateur
@@ -94,16 +113,25 @@ class SalaireModel extends BaseModel {
 
         $param = [
 
-            ":idSalaire" => $id,
-            ":somme" => $somme,
-            ":moisSalaire" => $moisSalaire,
-            ":idUtilisateur" => $idUtilisateur
+            ":idSalaire" => $this->idSalaire,
+            ":somme" => $this->somme,
+            ":moisSalaire" => $this->moisSalaire,
+            ":idUtilisateur" => $this->idUtilisateur
 
         ];
 
-        $statement = DataBase::getDB()->run($query, $param);
-        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
-        return $statement->fetch();
+        try {
+
+            DataBase::getDB()->run($query, $param);
+
+            return $this->idSalaire;
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
 
     }
 }

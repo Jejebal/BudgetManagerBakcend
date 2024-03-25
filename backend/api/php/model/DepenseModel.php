@@ -55,7 +55,7 @@ class DepenseModel extends BaseModel {
         
     }
 
-    public function insertDepense(){
+    public function insertDepense() : int | false | PDOException {
 
         $query = "INSERT INTO `Depense`
         (`Depense`.`nom_depense`, `Depense`.`montant`, `Depense`.`date`, `Depense`.`id_categorie`, `Depense`.`id_utilisateur`)
@@ -71,12 +71,21 @@ class DepenseModel extends BaseModel {
 
         ];
 
-        DataBase::getDB()->run($query, $param);
-        return DataBase::getDB()->lastInsertId();
+        try {
+
+            DataBase::getDB()->run($query, $param);
+            return DataBase::getDB()->lastInsertId();
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
 
     }
 
-    public static function selectAllDepenseByUser($idUtilisateur){
+    public static function selectAllDepenseByUser($idUtilisateur) : array | false | PDOException {
 
         $query = "SELECT *
         FROM `Depense`
@@ -88,13 +97,22 @@ class DepenseModel extends BaseModel {
 
         ];
 
-        $statement = DataBase::getDB()->run($query, $param);
-        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
-        return $statement->fetchAll();
+        try {
+
+            $statement = DataBase::getDB()->run($query, $param);
+            $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
+            return $statement->fetchAll();
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
 
     }
 
-    public static function updateDepense($id, $nom, $montant, $date, $idCategorie){
+    public static function updateDepense($id, $nom, $montant, $date, $idCategorie) : true | PDOException {
 
         $query = "UPDATE Depense
         SET `nom_depense` = :nomDepense, `montant` = :montant, `date`= :date, `id_categorie` = :idCategorie
@@ -125,7 +143,7 @@ class DepenseModel extends BaseModel {
 
     }
 
-    public static function deleteDepense($id){
+    public static function deleteDepense($id) : true | PDOException{
 
         $query = "DELETE FROM `Depense`
         WHERE `Depense`.`id_depense` = :idDepense;";

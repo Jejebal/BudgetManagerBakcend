@@ -12,6 +12,8 @@
 
 namespace Projet\Budgetmanager\api\php\model;
 
+use PDOException;
+use PDORow;
 use Projet\Budgetmanager\api\php\model\BaseModel as BaseModel;
 
 use Projet\Budgetmanager\api\php\model\Database as Database;
@@ -38,7 +40,7 @@ class RoleModel extends BaseModel {
         
     }
 
-    public static function selectRole($id) : RoleModel | false{
+    public static function selectRole($id) : RoleModel | false | PDOException {
 
         $query = "SELECT *
         FROM `Role`
@@ -50,9 +52,18 @@ class RoleModel extends BaseModel {
 
         ];
 
-        $statement = Database::getDB()->run($query, $param);
-        $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, static::class);
-        return $statement->fetch();
+        try {
+
+            $statement = Database::getDB()->run($query, $param);
+            $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, static::class);
+            return $statement->fetch();
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
 
     }
 
