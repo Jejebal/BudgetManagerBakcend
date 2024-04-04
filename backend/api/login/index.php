@@ -24,7 +24,33 @@ $error = [];
 $userCtrl = new UserCtrl();
 $groupeCtrl = new GroupeCtrl();
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+if($_SERVER["REQUEST_METHOD"] == "GET"){
+
+    $nom = "";
+    $motPasse = "";
+
+    $nom = filter_input(INPUT_GET, "nom", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $motPasse = filter_input(INPUT_GET, "motPasse", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    $user = $userCtrl->checkLogin($nom, $motPasse);
+
+    echo(json_encode($user));
+
+    if(is_array($user)){
+
+        http_response_code(INCOMPLET);
+        die();
+
+    }
+    else{
+
+        http_response_code(RETOURNE_INFORMATION);
+        die();
+
+    }
+
+}
+else if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $nom = "";
     $email = "";
@@ -40,27 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $remediation = array_key_exists("remediation", $donnees) ? filter_var($donnees["remediation"], FILTER_VALIDATE_INT) : null;
     $idGroupe = array_key_exists("idGroupe", $donnees) ? filter_var($donnees["idGroupe"], FILTER_VALIDATE_INT) : null;
 
-    if($nom != null && $email == null && $motPasse != null && $remediation == null && $idGroupe == null){
-
-        $user = $userCtrl->checkLogin($nom, $motPasse);
-
-        echo(json_encode($user));
-
-        if(is_array($user)){
-
-            http_response_code(INCOMPLET);
-            die();
-
-        }
-        else{
-
-            http_response_code(RETOURNE_INFORMATION);
-            die();
-
-        }
-
-    }
-    else if($nom != null && $email == null && $motPasse != null && $remediation != null && $idGroupe != null){
+    if($nom != null && $email == null && $motPasse != null && $remediation != null && $idGroupe != null){
 
         $user = $userCtrl->createMember($nom, $motPasse, $remediation, $idGroupe);
 
@@ -80,37 +86,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
 
     }
-    else {
+    else if($nom != null && $email != null && $motPasse != null && $remediation != null && $idGroupe == null) {
 
-        $groupeId = $groupeCtrl->createGroupe();
+        $user = $userCtrl->createAdmin($nom, $email, $motPasse, $remediation, $groupeCtrl);
 
-        if(is_array($groupeId)){
+        echo(json_encode($user));
 
-            echo(json_encode($groupeId));
-            http_response_code(SERVEUR_PROBLEME);
+        if(is_array($user)){
+
+            http_response_code(INCOMPLET);
             die();
 
         }
         else{
 
-            $user = $userCtrl->createAdmin($nom, $email, $motPasse, $remediation, $groupeId);
-
-            echo(json_encode($user));
-
-            if(is_array($user)){
-
-                http_response_code(INCOMPLET);
-                die();
-
-            }
-            else{
-
-                http_response_code(CREE_RESSOURCE);
-                die();
-
-            }
+            http_response_code(CREE_RESSOURCE);
+            die();
 
         }
+
+    }
+    else{
+
+        echo(json_encode(["data" => "Vous n'avez par fournie le nombre d'information nécessaire pour créer un utilisateur."]));
+        http_response_code(INCOMPLET);
+        die();
 
     }
 

@@ -13,7 +13,7 @@ USE budget_manager;
 CREATE TABLE IF NOT EXISTS Utilisateur (
 	id_utilisateur INT PRIMARY KEY AUTO_INCREMENT NOT NULL UNIQUE,
     nom_utilisateur VARCHAR(100) NOT NULL UNIQUE,
-    email VARCHAR(100) UNIQUE NULL,
+    email VARCHAR(100) NULL,
     mot_passe VARCHAR(256) NOT NULL,
     remediation INT(2) NOT NULL,
     id_groupe INT NOT NULL,

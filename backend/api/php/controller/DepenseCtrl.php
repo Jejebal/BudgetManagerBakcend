@@ -16,7 +16,7 @@ use Projet\Budgetmanager\api\php\model\DepenseModel as DepenseModel;
 
 class DepenseCtrl {
 
-    public function createDepense($nom, $montant, $date, $idCategorie, $idUtilisateur) {
+    public function createDepense($nom, $montant, $date, $idCategorie, $idUtilisateur) : DepenseModel | array {
         $error = [];
 
         if ($nom == "" || strlen($nom) >= 100 || strlen($nom) <= 3 || !$nom){
@@ -34,12 +34,14 @@ class DepenseCtrl {
         $dateSeparer = explode("-", $date);
 
         if ($date == "" || !checkdate($dateSeparer[1], $dateSeparer[2], $dateSeparer[0]) || !$date){
+
             $error["date"] = "Veuillez saisir une date correcte dans le format d-m-Y, exemple : 15-03-2024.";
+            
         }
 
         if(empty($error)){
 
-            $depense = new DepenseModel($init = [ 
+            $depense = new DepenseModel([ 
                 "nom_depense" => $nom,
                 "montant" => $montant,
                 "date" => $date,
@@ -49,7 +51,7 @@ class DepenseCtrl {
 
             $resultat = $depense->insertDepense();
 
-            if(!$resultat){
+            if(!is_int($resultat)){
 
                 $error["insertion"] = "Un problème est survenu lors de la création de votre dépense veuillez réessayer.";
 

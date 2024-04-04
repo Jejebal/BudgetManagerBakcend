@@ -33,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
 
     $donnees = recuperDonner();
 
-    $idGroupe = array_key_exists("idGroupe", $donnees) ? filter_var($donnees["idGroupe"], FILTER_VALIDATE_INT) : null;
+    $idGroupe = filter_input(INPUT_GET, "idGroupe", FILTER_VALIDATE_INT);
     $impot = array_key_exists("impot", $donnees) ? filter_var($donnees["impot"], FILTER_VALIDATE_FLOAT) : null;
     $loyer = array_key_exists("loyer", $donnees) ? filter_var($donnees["loyer"], FILTER_VALIDATE_FLOAT) : null;
     $credits = array_key_exists("credits", $donnees) ? filter_var($donnees["credits"], FILTER_VALIDATE_FLOAT) : null;

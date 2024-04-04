@@ -114,7 +114,7 @@ class UserModel extends BaseModel {
 
     }
 
-    public function insertUser() : int | PDOException {
+    public function insertUser() : string | PDOException {
 
         $this->motPasse = password_hash($this->motPasse, PASSWORD_DEFAULT);
 

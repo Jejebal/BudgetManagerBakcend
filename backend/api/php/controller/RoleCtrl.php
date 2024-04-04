@@ -16,16 +16,27 @@ use Projet\Budgetmanager\api\php\model\RoleModel as RoleModel;
 
 class RoleCtrl {
  
-    public function readRole($id) {
+    public function readRole($idRole) : RoleModel | array {
 
-        $role = RoleModel::selectRole($id);
+        if($idRole <= 0){
 
-        if(!$role){
+            $error["idRole"] = "Le rôle que vous essayez de récupérez ne peux pas existez.";
+
+        }
+
+        $role = RoleModel::selectRole($idRole);
+
+        if(!is_a($role, "Projet\Budgetmanager\api\php\model\RoleModel")){
+
             $error["read"] = "Le role que vous essayez de lire n'existe pas, veuillez réessayer.";
+
             return $error;
+
         }
         else{
+
             return $role;
+
         }
         
     }

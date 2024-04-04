@@ -12,11 +12,12 @@
 
 namespace Projet\Budgetmanager\api\php\controller;
 
+use Projet\Budgetmanager\api\php\model\GroupeModel;
 use Projet\Budgetmanager\api\php\model\UserModel;
 
 class UserCtrl {
 
-    public function createAdmin($nom, $email, $motPasse, $remediation, $idGroupe) : UserModel | array {
+    public function createAdmin($nom, $email, $motPasse, $remediation, $groupeCtrl) : UserModel | array {
 
         $error = [];
 
@@ -44,49 +45,56 @@ class UserCtrl {
 
         }
 
-        if($idGroupe <= 0){
-
-            $error["groupe"] = "Le groupe que vous essayez d'utiliser ne peut pas exister.";
-
-        }
-
         if(empty($error)){
 
             $result = UserModel::selectUserByUsername($nom);
 
             if(!is_a($result, "Projet\Budgetmanager\api\php\model\UserModel")){
 
-                $user = new UserModel([ 
-                    "nom_utilisateur" => $nom,
-                    "email" => $email,
-                    "mot_passe" => $motPasse,
-                    "remediation" => $remediation,
-                    "id_groupe" => $idGroupe
-                ]);
-    
-                $resultat = $user->insertUser();
-    
-                if(!is_string($resultat)){
-    
-                    $error["insertion"] = "Un problème est survenu lors de la création de votre compte veuillez réessayer.";
-    
-                    return $error;
-    
-                }
+                $groupeId = $groupeCtrl->createGroupe();
 
-                $user = UserModel::selectUserByUsername($resultat);
+                if(is_array($groupeId)){
 
-                if(!is_a($user, "Projet\Budgetmanager\api\php\model\UserModel")){
-
-                    $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
-    
-                    return $error;
+                    return $groupeId;
 
                 }
+                else{
 
-                $user->motPasse = "";
+                    var_dump($groupeId);
+
+                    $user = new UserModel([ 
+                        "nom_utilisateur" => $nom,
+                        "email" => $email,
+                        "mot_passe" => $motPasse,
+                        "remediation" => $remediation,
+                        "id_groupe" => $groupeId
+                    ]);
+        
+                    $resultat = $user->insertUser();
+        
+                    if(!is_string($resultat)){
+        
+                        $error["insertion"] = "Un problème est survenu lors de la création de votre compte veuillez réessayer.";
+        
+                        return $error;
+        
+                    }
     
-                return $user;
+                    $user = UserModel::selectUserByUsername($resultat);
+    
+                    if(!is_a($user, "Projet\Budgetmanager\api\php\model\UserModel")){
+    
+                        $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
+        
+                        return $error;
+    
+                    }
+    
+                    $user->motPasse = "";
+        
+                    return $user;
+
+                }
 
             }
 
@@ -130,36 +138,49 @@ class UserCtrl {
 
         if(empty($error)){
 
-            $user = new UserModel([ 
-                "nom_utilisateur" => $nom,
-                "mot_passe" => password_hash($motPasse, PASSWORD_DEFAULT),
-                "remediation" => $remediation,
-                "id_groupe" => $idGroupe
-            ]);
+            $groupe = GroupeModel::selectGroupe($idGroupe);
 
-            $resultat = $user->insertUser();
+            if(!is_a($groupe, "Projet\Budgetmanager\api\php\model\GroupeModel")){
 
-            if(!is_string($resultat)){
-
-                $error["insertion"] = "Un problème est survenu lors de la création de votre compte veuillez réessayer.";
+                $error["groupe"] = "Le groupe que vous essayer d'utiliser n'existe pas.";
 
                 return $error;
 
             }
-            
-            $user = UserModel::selectUserByUsername($resultat);
+            else{
 
-            if(!is_a($user, "Projet\Budgetmanager\api\php\model\UserModel")){
-
-                $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
-
-                return $error;
+                $user = new UserModel([ 
+                    "nom_utilisateur" => $nom,
+                    "mot_passe" => password_hash($motPasse, PASSWORD_DEFAULT),
+                    "remediation" => $remediation,
+                    "id_groupe" => $idGroupe
+                ]);
+    
+                $resultat = $user->insertUser();
+    
+                if(!is_string($resultat)){
+    
+                    $error["insertion"] = "Un problème est survenu lors de la création de votre compte veuillez réessayer.";
+    
+                    return $error;
+    
+                }
+                
+                $user = UserModel::selectUserByUsername($resultat);
+    
+                if(!is_a($user, "Projet\Budgetmanager\api\php\model\UserModel")){
+    
+                    $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
+    
+                    return $error;
+    
+                }
+    
+                $user->motPasse = "";
+    
+                return $user;
 
             }
-
-            $user->motPasse = "";
-
-            return $user;
 
         }
         

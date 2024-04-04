@@ -22,7 +22,7 @@ class GroupeCtrl {
         
         $groupe = GroupeModel::insertGroupe();
 
-        if(!$groupe){
+        if(!is_int($groupe)){
 
             $error["insertion"] = "Un problème est survenu lors de la création de votre groupe veillez réessayer.";
 
@@ -61,17 +61,13 @@ class GroupeCtrl {
             $error["credits"] = "Les crédits que vous essayez d'entrez ne sont pas valide. Ils doivent être plus grand que 0.";
 
         }
-
-        if(!strtotime($moisBudget)){
-
-            $date = explode("-", $moisBudget);
-
-            if(!checkdate($date[0], $date[1], $date[3])){
-
-                $error["moisBudget"] = "La date que vous essayez d'insérez n'est pas valide. La date dois être de format Année-Mois-Jours.";
-
-            }
-
+        
+        $date = explode("-", $moisBudget);
+        
+        if(!checkdate($date[2], $date[1], $date[0])){
+            
+            $error["moisBudget"] = "La date que vous essayez d'insérez n'est pas valide. La date dois être de format Année-Mois-Jours.";
+        
         }
 
         if(empty($error)){
@@ -94,11 +90,9 @@ class GroupeCtrl {
 
                 $resulta = $groupe->updateGroupe();
 
-                var_dump($resulta);
-
                 if(is_int($resulta)){
 
-                    return GroupeModel::selectGroupe($resulta);
+                    return $groupe;
 
                 }
                 else{
@@ -112,6 +106,8 @@ class GroupeCtrl {
             }
 
         }
+
+        return $error;
 
     }
 
