@@ -19,100 +19,30 @@ require_once("../../secret.php");
 
 use Projet\Budgetmanager\api\php\controller\UserCtrl;
 use Projet\Budgetmanager\api\php\controller\GroupeCtrl;
+use Projet\Budgetmanager\api\php\controller\DepenseCtrl;
 
 $error = [];
-$userCtrl = new UserCtrl();
+$salaireCtrl = new SalaireCtrl();
 $groupeCtrl = new GroupeCtrl();
+$depenseCtrl = new DepenseCtrl();
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
-
-    $nom = "";
-    $motPasse = "";
-
-    $nom = filter_input(INPUT_GET, "nom", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $motPasse = filter_input(INPUT_GET, "motPasse", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-    $user = $userCtrl->checkLogin($nom, $motPasse);
-
-    echo(json_encode($user));
-
-    if(is_array($user)){
-
-        http_response_code(INCOMPLET);
-        die();
-
-    }
-    else{
-
-        http_response_code(RETOURNE_INFORMATION);
-        die();
-
-    }
-
-}
-else if($_SERVER["REQUEST_METHOD"] == "POST"){
-
-    $nom = "";
-    $email = "";
-    $motPasse = "";
-    $remediation = 0;
+    $idUtilisateur = 0;
     $idGroupe = 0;
+    $date = 0;
+    
+    $idUtilisateur = filter_input(INPUT_GET, "idUtilisateur", FILTER_VALIDATE_INT);
+    $idGroupe = filter_input(INPUT_GET, "idGroupe", FILTER_VALIDATE_INT);
+    $date = filter_input(INPUT_GET, "date", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-    $donnees = recuperDonner();
+    $salaire = $salaireCtrl->readSalaire($idUtilisateur);
+    echo(json_encode($salaire));
 
-    $nom = array_key_exists("nom", $donnees) ? filter_var($donnees["nom"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
-    $email = array_key_exists("email", $donnees) ? filter_var($donnees["email"], FILTER_VALIDATE_EMAIL) : null;
-    $motPasse = array_key_exists("motPasse", $donnees) ? filter_var($donnees["motPasse"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
-    $remediation = array_key_exists("remediation", $donnees) ? filter_var($donnees["remediation"], FILTER_VALIDATE_INT) : null;
-    $idGroupe = array_key_exists("idGroupe", $donnees) ? filter_var($donnees["idGroupe"], FILTER_VALIDATE_INT) : null;
+    $budget = $groupeCtrl->getGroupe($idGroupe);
+    echo(json_encode($budget));
 
-    if($nom != null && $email == null && $motPasse != null && $remediation != null && $idGroupe != null){
-
-        $user = $userCtrl->createMember($nom, $motPasse, $remediation, $idGroupe);
-
-        echo(json_encode($user));
-
-        if(is_array($user)){
-
-            http_response_code(INCOMPLET);
-            die();
-
-        }
-        else{
-
-            http_response_code(CREE_RESSOURCE);
-            die();
-
-        }
-
-    }
-    else if($nom != null && $email != null && $motPasse != null && $remediation != null && $idGroupe == null) {
-
-        $user = $userCtrl->createAdmin($nom, $email, $motPasse, $remediation, $groupeCtrl);
-
-        echo(json_encode($user));
-
-        if(is_array($user)){
-
-            http_response_code(INCOMPLET);
-            die();
-
-        }
-        else{
-
-            http_response_code(CREE_RESSOURCE);
-            die();
-
-        }
-
-    }
-    else{
-
-        echo(json_encode(["data" => "Vous n'avez par fournie le nombre d'information nécessaire pour créer un utilisateur."]));
-        http_response_code(INCOMPLET);
-        die();
-
-    }
+    $depense = $depenseCtrl->selectSumDepenseByUserByMonth($idUtilisateur, $date);
+    echo(json_encode($depense));
 
 }
 else{

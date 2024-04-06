@@ -83,6 +83,28 @@ class DepenseCtrl {
         
     }
 
+    public function readSumDepense($idUtilisateur, $date) {
+        
+        $date = explode("-", $moisBudget);
+        
+        if(!checkdate($date[2], $date[1], $date[0])){
+            
+            $error["moisBudget"] = "La date que vous essayez d'insérez n'est pas valide. La date dois être de format Année-Mois-Jours.";
+        
+        }
+
+        $depense = DepenseModel::selectSumDepenseByUserByMonth($idUtilisateur, $date);
+
+        if(!$depense){
+            $error["read"] = "La somme des dépenses du mois que vous essayez de lire n'existe pas, veuillez réessayer.";
+            return $error;
+        }
+        else{
+            return $depense;
+        }
+        
+    }
+
     public function updateDepense($id, $nom, $montant, $date, $idCategorie, $idUtilisateur) {
         $error = [];
 
