@@ -84,9 +84,9 @@ class DepenseCtrl {
         
     }
 
-    public function readSumDepense($idUtilisateur, $date) {
+    public function readSumDepense($idUtilisateur, $moisStatu) {
         
-        $date = explode("-", $moisBudget);
+        $date = explode("-", $moisStatu);
         
         if(!checkdate($date[2], $date[1], $date[0])){
             

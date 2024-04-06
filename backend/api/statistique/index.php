@@ -17,9 +17,9 @@ require_once("../php/fonction.php");
 require_once("../../../vendor/autoload.php");
 require_once("../../secret.php");
 
-use Projet\Budgetmanager\api\php\controller\UserCtrl;
 use Projet\Budgetmanager\api\php\controller\GroupeCtrl;
 use Projet\Budgetmanager\api\php\controller\DepenseCtrl;
+use Projet\Budgetmanager\api\php\controller\SalaireCtrl;
 
 $error = [];
 $salaireCtrl = new SalaireCtrl();
@@ -41,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     $budget = $groupeCtrl->getGroupe($idGroupe);
     echo(json_encode($budget));
 
-    $depense = $depenseCtrl->selectSumDepenseByUserByMonth($idUtilisateur, $date);
+    $depense = $depenseCtrl->readSumDepense($idUtilisateur, $date);
     echo(json_encode($depense));
 
 }
