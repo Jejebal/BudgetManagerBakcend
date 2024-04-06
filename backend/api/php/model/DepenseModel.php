@@ -32,7 +32,7 @@ class DepenseModel extends BaseModel {
 
     public string $nomDepense;
 
-    public int $montant;
+    public float $montant;
 
     public string $date;
 
@@ -80,21 +80,51 @@ class DepenseModel extends BaseModel {
 
         }
         catch(PDOException $exception){
-            var_dump($exception);
+
             return $exception;
+
         }
 
     }
 
     public static function selectAllDepenseByUser($idUtilisateur) : array | false | PDOException {
 
-        $query = "SELECT *
+        $query = "SELECT `Depense`.*, `Categorie`.`nom_categorie`
         FROM `Depense`
+        INNER JOIN `Categorie` WHERE `Depense`.`id_categorie` = `Categorie`.`id_categorie`
         WHERE `Depense`.`id_utilisateur` = :idUtilisateur;";
 
         $param = [
 
             ":idDepense" => $idUtilisateur
+
+        ];
+
+        try {
+
+            $statement = DataBase::getDB()->run($query, $param);
+            $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
+            return $statement->fetchAll();
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
+
+    }
+
+    public static function selectSumDepenseByUserByMonth($idUtilisateur, $date) : array | false | PDOException {
+
+        $query = "SELECT SUM(`Depense`.`montant`)
+        FROM `Depense`
+        WHERE `Depense`.`id_utilisateur` = :idUtilisateur AND `Depense`.`date` LIKE CONCAT(:date, '%');";
+
+        $param = [
+
+            ":idUtilisateur" => $idUtilisateur,
+            ":date" => $date
 
         ];
 

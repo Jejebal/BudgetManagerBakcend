@@ -14,6 +14,7 @@ namespace Projet\Budgetmanager\api\php\controller;
 
 use Projet\Budgetmanager\api\php\model\GroupeModel;
 use Projet\Budgetmanager\api\php\model\UserModel;
+use Projet\Budgetmanager\api\php\model\SalaireModel;
 
 class UserCtrl {
 
@@ -60,8 +61,6 @@ class UserCtrl {
                 }
                 else{
 
-                    var_dump($groupeId);
-
                     $user = new UserModel([ 
                         "nom_utilisateur" => $nom,
                         "email" => $email,
@@ -88,6 +87,16 @@ class UserCtrl {
         
                         return $error;
     
+                    }
+
+                    $salaire = SalaireModel::insertSalaire($user->idUtilisateur);
+
+                    if(!is_int($salaire)){
+
+                        $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
+        
+                        return $error;
+
                     }
     
                     $user->motPasse = "";
@@ -175,6 +184,16 @@ class UserCtrl {
                     return $error;
     
                 }
+
+                $salaire = SalaireModel::insertSalaire($user->idUtilisateur);
+
+                if(!is_int($salaire)){
+
+                    $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
+        
+                    return $error;
+
+                }
     
                 $user->motPasse = "";
     
@@ -224,6 +243,24 @@ class UserCtrl {
         else{
 
             return $error;
+
+        }
+
+    }
+
+    public function getAllByGroupe($idGroupe){
+
+        $error = [];
+
+        if($idGroupe <= 0){
+
+            $error["groupe"] = "Le groupe que vous essayez d'utiliser ne peut pas exister.";
+
+        }
+
+        if(empty($error)){
+
+
 
         }
 

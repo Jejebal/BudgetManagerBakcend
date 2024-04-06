@@ -16,63 +16,6 @@
  
  class SalaireCtrl {
  
-    public function createSalaire($somme, $moisSalaire, $idUtilisateur) : SalaireModel | array {
-
-        $error = [];
- 
-        if ($somme == "" || strlen($somme) >= 14 || !$somme){
- 
-            $error["somme"] = "Veuillez entrer un salaire réel.";
- 
-        }
- 
-        if ($moisSalaire == "" || $moisSalaire > 12 || $moisSalaire < 1 || !$moisSalaire){
-
-            $error["moisSalaire"] = "Veuillez saisir un mois correct entre 1 et 12.";
-
-        }
-
-        if($idUtilisateur <= 0){
-
-            $error["idUtilisateur"] = "L'utilisateur que vous essayez de liez au salaire ne peux pas existez.";
-
-        }
- 
-        if(empty($error)){
- 
-            $salaire = new SalaireModel([ 
-                "somme" => $somme,
-                "mois_salaire" => $moisSalaire,
-                "id_utilisateur" => $idUtilisateur
-            ]);
- 
-            $resultat = $salaire->insertSalaire();
- 
-            if(!is_int($resultat)){
- 
-                $error["insertion"] = "Un problème est survenu lors de la création de votre salaire veuillez réessayer.";
- 
-                return $error;
- 
-            }
-
-            $salaire = SalaireModel::selectSalaire($resultat);
-
-            if(!is_a($salaire, "Projet\Budgetmanager\api\php\model\SalaireModel")){
-
-                $error["insertion"] = "Un problème est survenu lors de la récupération de votre salaire veuillez réessayer.";
- 
-                return $error;
-
-            }
-            
-            return $resultat;
- 
-        }
-         
-        return $error;
-    }
- 
     public function readSalaire($idUtilisateur) : SalaireModel | array {
 
         $error = [];
@@ -104,7 +47,7 @@
 
         $error = [];
  
-        if ($somme == "" || strlen($somme) >= 14 || !$somme){
+        if ($somme <= 0){
 
             $error["somme"] = "Veuillez entrer un salaire réel.";
 
@@ -123,7 +66,7 @@
             $error["idUtilisateur"] = "L'utilisateur que vous essayez de liez au salaire ne peux pas existez.";
 
         }
-        var_dump($error);
+
         if(empty($error)){
 
             $salaire = SalaireModel::selectSalaire($idUtilisateur);
@@ -136,11 +79,9 @@
             
             else{
 
-                $salaire->$moisSalaire=$moisSalaire;
+                $salaire->moisSalaire = $moisSalaire;
 
                 $salaire->somme = $somme;
-
-                var_dump($salaire);
 
                 $resultat = $salaire->updateSalaire();
                 
