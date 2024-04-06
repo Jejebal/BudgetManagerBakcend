@@ -88,6 +88,33 @@ class UserModel extends BaseModel {
         }
 
     }
+
+    public static function selectUserByGroupe($idGroupe) : array | PDOException {
+
+        $query = "SELECT `Utilisateur`.`id_utilisateur`, `Utilisateur`.`nom_utilisateur`
+        FROM `Utilisateur`
+        WHERE `Utilisateur`.`id_groupe` = :idGroupe;";
+
+        $param = [
+
+            ":idGroupe" => $idGroupe
+
+        ];
+
+        try{
+
+            $statement = Database::getDB()->run($query, $param);
+            $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, static::class);
+            return $statement->fetchAll();
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
+
+    }
     
     public static function verifyPassword($nom, $motPasse) : UserModel | false{
 

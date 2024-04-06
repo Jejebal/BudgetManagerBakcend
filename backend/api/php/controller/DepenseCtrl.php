@@ -17,6 +17,7 @@ use Projet\Budgetmanager\api\php\model\DepenseModel as DepenseModel;
 class DepenseCtrl {
 
     public function createDepense($nom, $montant, $date, $idCategorie, $idUtilisateur) : DepenseModel | array {
+        
         $error = [];
 
         if ($nom == "" || strlen($nom) >= 100 || strlen($nom) <= 3 || !$nom){

@@ -30,7 +30,7 @@ class SalaireModel extends BaseModel {
 
     public int $idSalaire;
 
-    public int $somme;
+    public float $somme;
 
     public string $moisSalaire;
 
@@ -49,17 +49,15 @@ class SalaireModel extends BaseModel {
         
     }
 
-    public function insertSalaire() : int | false | PDOException {
+    public static function insertSalaire($idUtilisateur) : int | false | PDOException {
 
         $query = "INSERT INTO `Salaire`
         (`somme`, `mois_salaire`, `id_utilisateur`)
-        VALUES(:somme, :moisSalaire, :idUtilisateur);";
+        VALUES(0.0, 0, :idUtilisateur);";
 
         $param = [
 
-            ":somme" => $this->somme,
-            ":moisSalaire" => $this->moisSalaire,
-            ":idUtilisateur" => $this->idUtilisateur
+            ":idUtilisateur" => $idUtilisateur
 
         ];
 
