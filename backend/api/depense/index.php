@@ -48,24 +48,31 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 }
 else if($_SERVER["REQUEST_METHOD"] == "PUT"){
     // Salaire
-    $id = 0;
     $somme = 0;
     $moisSalaire = "";
     $idUtilisateur = 0;
     // Données
     $donnees = recuperDonner();
 
-    $id = array_key_exists("id", $donnees) ? filter_var($donnees["id"], FILTER_VALIDATE_INT) : null;
     $somme = array_key_exists("somme", $donnees) ? filter_var($donnees["somme"], FILTER_VALIDATE_INT) : null;
     $moisSalaire = array_key_exists("moisSalaire", $donnees) ? filter_var($donnees["moisSalaire"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
     $idUtilisateur = array_key_exists("idUtilisateur", $donnees) ? filter_var($donnees["idUtilisateur"], FILTER_VALIDATE_INT) : null;
 
-    if($somme != null && $moisSalaire !== null  && $id !== null  && $idUtilisateur !== null){
+    if($somme != null && $moisSalaire !== null  && $idUtilisateur !== null){
 
-        $salaire = $salaireCtrl->updateSalaire($id, $somme, $moisSalaire, $idUtilisateur);
+        $salaire = $salaireCtrl->updateSalaire($somme, $moisSalaire, $idUtilisateur);
         echo(json_encode($salaire));
-        http_response_code(SERVEUR_PROBLEME);
-        die();
+
+        if(is_array($salaire))
+        {
+            http_response_code(INCOMPLET);
+            die();
+        }
+        else
+        {
+            http_response_code(MODIFIE_RESSOURCE);
+            die();
+        }
     }
 }
 else if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -80,8 +87,6 @@ else if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Données
     $donnees = recuperDonner();
 
-    var_dump($donnees);
-
     $nomDepense = array_key_exists("nomDepense", $donnees) ? filter_var($donnees["nomDepense"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
     $montant = array_key_exists("montant", $donnees) ? filter_var($donnees["montant"], FILTER_VALIDATE_INT) : null;
     $date = array_key_exists("date", $donnees) ? filter_var($donnees["date"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
@@ -92,7 +97,6 @@ else if($_SERVER["REQUEST_METHOD"] == "POST"){
     {
 
         $depense = $depenseCtrl->createDepense($nomDepense, $montant, $date, $idCategorie, $idUtilisateur);
-        var_dump($depense);
 
         echo(json_encode($depense));
 

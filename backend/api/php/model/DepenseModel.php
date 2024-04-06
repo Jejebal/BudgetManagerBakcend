@@ -80,9 +80,8 @@ class DepenseModel extends BaseModel {
 
         }
         catch(PDOException $exception){
-
+            var_dump($exception);
             return $exception;
-
         }
 
     }
