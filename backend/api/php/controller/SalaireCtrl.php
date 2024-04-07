@@ -10,11 +10,12 @@
  * 
  */
  
- namespace Projet\Budgetmanager\api\php\controller;
+namespace Projet\Budgetmanager\api\php\controller;
  
- use Projet\Budgetmanager\api\php\model\SalaireModel as SalaireModel;
- 
- class SalaireCtrl {
+use Projet\Budgetmanager\api\php\model\SalaireModel as SalaireModel;
+use Projet\Budgetmanager\api\php\model\UserModel;
+
+class SalaireCtrl {
  
     public function readSalaire($idUtilisateur) : SalaireModel | array {
 
@@ -22,24 +23,40 @@
 
         if($idUtilisateur <= 0){
 
-            $error["idGroupe"] = "L'utilisateur que vous essayez de liez au salaire ne peux pas existez.";
+            $error["idUtilisateur"] = "L'utilisateur que vous essayez d'utilisé ne peux pas existez veuillez réessayez.";
 
         }
+
+        if(empty($error)){
+
+            $user = UserModel::selectUserById($idUtilisateur);
+
+            if(!is_a($user, UserModel::class)){
+
+                $error["utilisateur"] = "L'utilisateur que vous essayer d'utiliser n'existe pas.";
+
+                return $error;
+
+            }
+
+            $salaire = SalaireModel::selectSalaire($idUtilisateur);
  
-        $salaire = SalaireModel::selectSalaire($idUtilisateur);
- 
-        if(!is_a($salaire, "Projet\Budgetmanager\api\php\model\SalaireModel")){
+            if(!is_a($salaire, SalaireModel::class)){
 
-            $error["read"] = "Le salaire que vous essayez de lire n'existe pas, veuillez réessayer.";
+                $error["read"] = "Le salaire que vous essayez de lire n'existe pas, veuillez réessayer.";
 
-            return $error;
+                return $error;
+
+            }
+            else{
+
+                return $salaire;
+
+            }
 
         }
-        else{
 
-            return $salaire;
-
-        }
+        return $error;
          
     }
  
@@ -71,7 +88,7 @@
 
             $salaire = SalaireModel::selectSalaire($idUtilisateur);
 
-            if(!is_a($salaire, "Projet\Budgetmanager\api\php\model\SalaireModel")){
+            if(!is_a($salaire, SalaireModel::class)){
 
                 $error["salaire"] = "Une erreur est survenue l'ore de la récupération de votre salaire veuillez réessayer.";
                 return $error;
@@ -106,4 +123,4 @@
         return $error;
     }
     
- }
+}

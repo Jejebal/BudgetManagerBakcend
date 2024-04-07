@@ -39,24 +39,20 @@ if($_SERVER["REQUEST_METHOD"] == "PUT"){
     $credits = array_key_exists("credits", $donnees) ? filter_var($donnees["credits"], FILTER_VALIDATE_FLOAT) : null;
     $moisBudget = array_key_exists("moisBudget", $donnees) ? filter_var($donnees["moisBudget"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
 
-    if($idGroupe != null && $impot != null && $loyer != null && $credits != null && $moisBudget != null ){
+    $groupe = $groupeCtrl->modifieGroup($idGroupe, $impot, $loyer, $credits, $moisBudget);
 
-        $groupe = $groupeCtrl->modifieGroup($idGroupe, $impot, $loyer, $credits, $moisBudget);
+    echo(json_encode($groupe));
 
-        echo(json_encode($groupe));
+    if(is_array($groupe)){
 
-        if(is_array($groupe)){
+        http_response_code(INCOMPLET);
+        die();
 
-            http_response_code(INCOMPLET);
-            die();
+    }
+    else{
 
-        }
-        else{
-
-            http_response_code(MODIFIE_RESSOURCE);
-            die();
-
-        }
+        http_response_code(MODIFIE_RESSOURCE);
+        die();
 
     }
 

@@ -12,11 +12,13 @@
 
 namespace Projet\Budgetmanager\api\php\controller;
 
-use Projet\Budgetmanager\api\php\model\DepenseModel as DepenseModel;
+use Projet\Budgetmanager\api\php\model\DepenseModel;
+use Projet\Budgetmanager\api\php\model\CategorieModel;
+use Projet\Budgetmanager\api\php\model\UserModel;
 
 class DepenseCtrl {
 
-    public function createDepense($nom, $montant, $date, $idCategorie, $idUtilisateur) : DepenseModel | array {
+    public function createDepense($nom, $montant, $idCategorie, $idUtilisateur) : DepenseModel | array {
         
         $error = [];
 
@@ -32,20 +34,42 @@ class DepenseCtrl {
 
         }
 
-        $dateSeparer = explode("-", $date);
+        if($idCategorie <= 0){
 
-        if ($date == "" || !checkdate($dateSeparer[1], $dateSeparer[2], $dateSeparer[0]) || !$date){
+            $error["idCategorie"] = "La catégorie que vous essayez d'utilisé ne peux pas existez.";
 
-            $error["date"] = "Veuillez saisir une date correcte dans le format d-m-Y, exemple : 15-03-2024.";
-            
+        }
+
+        if($idUtilisateur <= 0){
+
+            $error["idUtilisateur"] = "L'utilisateur que vous essayez d'utilisé ne peux pas existez.";
+
         }
 
         if(empty($error)){
 
+            $categorie = CategorieModel::selectCategorieById($idCategorie);
+
+            if(!is_a($categorie, CategorieModel::class)){
+
+                $error["categorie"] = "La catégorie que vous essayez de liez a votre dépense n'existe pas veuillez réessayez.";
+                return $error;
+
+            }
+
+            $user = UserModel::selectUserById($idUtilisateur);
+
+            if(!is_a($user, UserModel::class)){
+
+                $error["utilisateur"] = "L'utilisateur que vous essayez de liez a votre dépense n'existe pas veuillez réessayez.";
+                return $error;
+
+            }
+
             $depense = new DepenseModel([ 
                 "nom_depense" => $nom,
                 "montant" => $montant,
-                "date" => $date,
+                "date" => date("Y-m-d"),
                 "id_categorie" => $idCategorie,
                 "id_utilisateur" => $idUtilisateur
             ]);
@@ -61,6 +85,7 @@ class DepenseCtrl {
             }
             else{
 
+                $depense->idDepense = $resultat;
                 return $depense;
 
             }
@@ -70,90 +95,42 @@ class DepenseCtrl {
         return $error;
     }
 
-    public function readDepense($idUtilisateur) {
+    public function readSumDepense($idUtilisateur) {
 
-        $depense = DepenseModel::selectAllDepenseByUser($idUtilisateur);
-
-        if(!$depense){
-            $error["read"] = "La dépense que vous essayez de lire n'existe pas, veuillez réessayer.";
-            return $error;
-        }
-        else{
-            return $depense;
-        }
-        
-    }
-
-    public function readSumDepense($idUtilisateur, $moisStatu) {
-        
-        $date = explode("-", $moisStatu);
-        
-        if(!checkdate($date[2], $date[1], $date[0])){
-            
-            $error["moisBudget"] = "La date que vous essayez d'insérez n'est pas valide. La date dois être de format Année-Mois-Jours.";
-        
-        }
-
-        $depense = DepenseModel::selectSumDepenseByUserByMonth($idUtilisateur, $date);
-
-        if(!$depense){
-            $error["read"] = "La somme des dépenses du mois que vous essayez de lire n'existe pas, veuillez réessayer.";
-            return $error;
-        }
-        else{
-            return $depense;
-        }
-        
-    }
-
-    public function updateDepense($id, $nom, $montant, $date, $idCategorie, $idUtilisateur) {
         $error = [];
 
-        if ($nom == "" || strlen($nom) >= 100 || strlen($nom) <= 3 || !$nom){
+        if($idUtilisateur <= 0){
 
-            $error["nom"] = "Le nom de la dépense peut contenir entre 3 et 100 caractères.";
+            $error["idUtilisateur"] = "L'utilisateur que vous essayez d'utilisé ne peux pas existez.";
 
-        }
-
-        if ($montant == "" || strlen($montant) > 14 || !$montant){
-
-            $error["montant"] = "Arretez de vous mentir, vous ne gagnez pas autant.";
-
-        }
-
-        $dateSeparer = explode("-", $date);
-
-        if ($date == "" || !checkdate($dateSeparer[1], $dateSeparer[2], $dateSeparer[0]) || !$date){
-            $error["date"] = "Veuillez saisir une date correcte dans le format d-m-Y, exemple : 15-03-2024.";
         }
 
         if(empty($error)){
 
-            $depense = DepenseModel::updateDepense($id, $nom, $montant, $date, $idCategorie);
+            $user = UserModel::selectUserById($idUtilisateur);
 
-            if (!$depense) {
-                $error["modification"] = "Un problème est survenu lors de la modification de votre dépense veuillez réessayer.";
+            if(!is_a($user, UserModel::class)){
+
+                $error["utilisateur"] = "L'utilisateur que vous essayez d'utilisé n'existez pas.";
+
+            }
+
+            $depense = DepenseModel::selectSumDepenseByUserByMonth($idUtilisateur);
+
+            if(!is_array($depense)){
+    
+                $error["read"] = "La somme des dépenses du mois que vous essayez de lire n'existe pas, veuillez réessayer.";
                 return $error;
             }
+    
             else{
-                return $depense;
+    
+                return $depense[0];
+    
             }
 
         }
         
-        return $error;
     }
-
-    public function deleteDepense($id) {
-
-        $depense = DepenseModel::deleteDepense($id);
-
-        if(!$depense){
-            $error["delete"] = "La dépense que vous essayez de supprimer n'existe pas, veuillez réessayer.";
-            return $error;
-        }
-        else{
-            return $depense;
-        }
-    }
+    
 }

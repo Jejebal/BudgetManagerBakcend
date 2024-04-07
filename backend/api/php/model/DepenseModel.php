@@ -13,6 +13,7 @@
 namespace Projet\Budgetmanager\api\php\model;
 
 use PDOException;
+use PDO;
 use Projet\Budgetmanager\api\php\model\BaseModel as BaseModel;
 use Projet\Budgetmanager\api\php\model\Database;
 
@@ -89,14 +90,13 @@ class DepenseModel extends BaseModel {
 
     public static function selectAllDepenseByUser($idUtilisateur) : array | false | PDOException {
 
-        $query = "SELECT `Depense`.*, `Categorie`.`nom_categorie`
+        $query = "SELECT *
         FROM `Depense`
-        INNER JOIN `Categorie` WHERE `Depense`.`id_categorie` = `Categorie`.`id_categorie`
         WHERE `Depense`.`id_utilisateur` = :idUtilisateur;";
 
         $param = [
 
-            ":idDepense" => $idUtilisateur
+            ":idUtilisateur" => $idUtilisateur
 
         ];
 
@@ -115,24 +115,24 @@ class DepenseModel extends BaseModel {
 
     }
 
-    public static function selectSumDepenseByUserByMonth($idUtilisateur, $date) : array | false | PDOException {
+    public static function selectSumDepenseByUserByMonth($idUtilisateur) : array | false | PDOException {
 
         $query = "SELECT SUM(`Depense`.`montant`)
         FROM `Depense`
-        WHERE `Depense`.`id_utilisateur` = :idUtilisateur AND `Depense`.`date` LIKE CONCAT(:date, '%');";
+        WHERE `Depense`.`id_utilisateur` = :idUtilisateur AND MONTH(`Depense`.`date`) = MONTH(:date) ;";
 
         $param = [
 
             ":idUtilisateur" => $idUtilisateur,
-            ":date" => $date
+            ":date" => date("Y-m-d")
 
         ];
 
         try {
 
             $statement = DataBase::getDB()->run($query, $param);
-            $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, __CLASS__);
-            return $statement->fetchAll();
+            $statement->setFetchMode(PDO::FETCH_NUM);
+            return $statement->fetch();
 
         }
         catch(PDOException $exception){
@@ -142,38 +142,7 @@ class DepenseModel extends BaseModel {
         }
 
     }
-
-    public static function updateDepense($id, $nom, $montant, $date, $idCategorie) : true | PDOException {
-
-        $query = "UPDATE Depense
-        SET `nom_depense` = :nomDepense, `montant` = :montant, `date`= :date, `id_categorie` = :idCategorie
-        WHERE `id_depense` = :idDepense;";
-
-        $param = [
-
-            ":idDepense" => $id,
-            ":nomDepense" => $nom,
-            ":montant" => $montant,
-            ":date" => $date,
-            ":idCategorie" => $idCategorie
-
-        ];
-
-        try{
-
-            DataBase::getDB()->run($query, $param);
-
-            return true;
-
-        }
-        catch(PDOException $exception){
-
-            return $exception;
-
-        }
-
-    }
-
+    
     public static function deleteDepense($id) : true | PDOException{
 
         $query = "DELETE FROM `Depense`
@@ -199,4 +168,5 @@ class DepenseModel extends BaseModel {
         }
 
     }
+    
 }

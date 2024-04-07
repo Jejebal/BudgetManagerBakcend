@@ -62,6 +62,33 @@ class UserModel extends BaseModel {
 
     }
 
+    public static function selectUserById($id) : UserModel | false | PDOException {
+        
+        $query = "SELECT *
+        FROM `Utilisateur`
+        WHERE `Utilisateur`.`id_utilisateur` = :idUtilisateur;";
+
+        $param = [
+
+            ":idUtilisateur" => $id
+
+        ];
+
+        try {
+
+            $statement = Database::getDB()->run($query, $param);
+            $statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, static::class);
+            return $statement->fetch();
+
+        }
+        catch(PDOException $exception){
+
+            return $exception;
+
+        }
+
+    }
+
     public static function selectUserByUsername($nom) : UserModel | false | PDOException {
         
         $query = "SELECT *
@@ -120,7 +147,7 @@ class UserModel extends BaseModel {
 
         $user = UserModel::selectUserByUsername($nom);
 
-        if(!$user || !is_a($user, "Projet\Budgetmanager\api\php\model\UserModel")){
+        if(!$user || !is_a($user, UserModel::class)){
 
             return false;
 

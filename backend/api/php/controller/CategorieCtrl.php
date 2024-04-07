@@ -15,31 +15,21 @@ namespace Projet\Budgetmanager\api\php\controller;
 use Projet\Budgetmanager\api\php\model\CategorieModel as CategorieModel;
 
 class CategorieCtrl {
- 
-    public function readCategorie($id) {
-
-        $categorie = CategorieModel::selectCategorieById($id);
-
-        if(!$categorie){
-            $error["read"] = "La categorie que vous essayez de lire n'existe pas, veuillez réessayer.";
-            return $error;
-        }
-        else{
-            return $categorie;
-        }
-        
-    }
 
     public function readAllCategorie() {
 
         $categorie = CategorieModel::selectAllCategorie();
 
         if(!$categorie){
+
             $error["read"] = "Une erreur est survenue, veuillez réessayer.";
             return $error;
+
         }
         else{
+
             return $categorie;
+            
         }
         
     }

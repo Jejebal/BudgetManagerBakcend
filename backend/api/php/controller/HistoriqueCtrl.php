@@ -34,7 +34,7 @@ class HistoriqueCtrl {
 
             $groupe = GroupeModel::selectGroupe($idGroupe);
 
-            if(!is_a($groupe, "Projet\Budgetmanager\api\php\model\GroupeModel")){
+            if(!is_a($groupe, GroupeModel::class)){
 
                 $error["groupe"] = "Le groupe que vous essayer d'utiliser n'existe pas.";
 

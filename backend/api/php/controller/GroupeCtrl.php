@@ -117,7 +117,7 @@ class GroupeCtrl {
 
         if($idGroupe <= 0){
 
-            $error["idGroupe"] = "Le groupe que vous essayez de modifier ne peux pas existez.";
+            $error["idGroupe"] = "Le groupe que vous essayez de récupérez ne peux pas existez.";
 
         }
 
@@ -125,7 +125,7 @@ class GroupeCtrl {
 
             $groupe = GroupeModel::selectGroupe($idGroupe);
 
-            if(!$groupe){
+            if(!is_a($groupe, GroupeModel::class)){
 
                 $error["groupe"] = "Une erreur est survenue l'ore de la récupération de votre groupe veuillez réessayer.";
 

@@ -27,22 +27,40 @@ $groupeCtrl = new GroupeCtrl();
 $depenseCtrl = new DepenseCtrl();
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
+
     $idUtilisateur = 0;
     $idGroupe = 0;
     $date = 0;
     
     $idUtilisateur = filter_input(INPUT_GET, "idUtilisateur", FILTER_VALIDATE_INT);
     $idGroupe = filter_input(INPUT_GET, "idGroupe", FILTER_VALIDATE_INT);
-    $date = filter_input(INPUT_GET, "date", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     $salaire = $salaireCtrl->readSalaire($idUtilisateur);
-    echo(json_encode($salaire));
-
     $budget = $groupeCtrl->getGroupe($idGroupe);
-    echo(json_encode($budget));
+    $depense = $depenseCtrl->readSumDepense($idUtilisateur);
 
-    $depense = $depenseCtrl->readSumDepense($idUtilisateur, $date);
-    echo(json_encode($depense));
+    $list = [
+
+        "salaire" => $salaire,
+        "budget" => $budget,
+        "depense" => round($depense, 2)
+
+    ];
+
+    echo(json_encode($list));
+
+    if(is_array($salaire) || is_array($budget) || is_array($depense)){
+
+        http_response_code(RESSOURCE_INTROUVABLE);
+        die();
+
+    }
+    else{
+
+        http_response_code(RETOURNE_INFORMATION);
+        die();
+
+    }
 
 }
 else{

@@ -50,7 +50,7 @@ class UserCtrl {
 
             $result = UserModel::selectUserByUsername($nom);
 
-            if(!is_a($result, "Projet\Budgetmanager\api\php\model\UserModel")){
+            if(!is_a($result, UserModel::class)){
 
                 $groupeId = $groupeCtrl->createGroupe();
 
@@ -81,7 +81,7 @@ class UserCtrl {
     
                     $user = UserModel::selectUserByUsername($resultat);
     
-                    if(!is_a($user, "Projet\Budgetmanager\api\php\model\UserModel")){
+                    if(!is_a($user, UserModel::class)){
     
                         $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
         
@@ -149,7 +149,7 @@ class UserCtrl {
 
             $groupe = GroupeModel::selectGroupe($idGroupe);
 
-            if(!is_a($groupe, "Projet\Budgetmanager\api\php\model\GroupeModel")){
+            if(!is_a($groupe, GroupeModel::class)){
 
                 $error["groupe"] = "Le groupe que vous essayer d'utiliser n'existe pas.";
 
@@ -177,7 +177,7 @@ class UserCtrl {
                 
                 $user = UserModel::selectUserByUsername($resultat);
     
-                if(!is_a($user, "Projet\Budgetmanager\api\php\model\UserModel")){
+                if(!is_a($user, UserModel::class)){
     
                     $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
     
@@ -243,24 +243,6 @@ class UserCtrl {
         else{
 
             return $error;
-
-        }
-
-    }
-
-    public function getAllByGroupe($idGroupe){
-
-        $error = [];
-
-        if($idGroupe <= 0){
-
-            $error["groupe"] = "Le groupe que vous essayez d'utiliser ne peut pas exister.";
-
-        }
-
-        if(empty($error)){
-
-
 
         }
 

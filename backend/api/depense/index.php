@@ -29,6 +29,7 @@ $depenseCtrl = new DepenseCtrl();
 $categorieCtrl = new CategorieCtrl();
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
+
     // Salaire
     $idUtilisateur = 0;
     // Budget
@@ -38,13 +39,30 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     $idGroupe = filter_input(INPUT_GET, "idGroupe", FILTER_VALIDATE_INT);
 
     $salaire = $salaireCtrl->readSalaire($idUtilisateur);
-    echo(json_encode($salaire));
-
     $budget = $groupeCtrl->getGroupe($idGroupe);
-    echo(json_encode($budget));
 
-    $categorie = $categorieCtrl->readAllCategorie();
-    echo(json_encode($categorie));
+    $list = [ 
+
+        "salaire" => $salaire,
+        "budget" => $budget
+
+    ];
+
+    echo(json_encode($list));
+
+    if(is_array($salaire) || is_array($budget)){
+
+        http_response_code(RESSOURCE_INTROUVABLE);
+        die();
+
+    }
+    else{
+
+        http_response_code(RETOURNE_INFORMATION);
+        die();
+
+    }
+
 }
 else if($_SERVER["REQUEST_METHOD"] == "PUT"){
     // Salaire
@@ -92,11 +110,11 @@ else if($_SERVER["REQUEST_METHOD"] == "POST"){
     $donnees = recuperDonner();
 
     $nomDepense = array_key_exists("nomDepense", $donnees) ? filter_var($donnees["nomDepense"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
-    $montant = array_key_exists("montant", $donnees) ? filter_var($donnees["montant"], FILTER_VALIDATE_INT) : null;
+    $montant = array_key_exists("montant", $donnees) ? filter_var($donnees["montant"], FILTER_VALIDATE_FLOAT) : null;
     $idCategorie = array_key_exists("idCategorie", $donnees) ? filter_var($donnees["idCategorie"], FILTER_VALIDATE_INT) : null;
     $idUtilisateur = array_key_exists("idUtilisateur", $donnees) ? filter_var($donnees["idUtilisateur"], FILTER_VALIDATE_INT) : null;
 
-    $depense = $depenseCtrl->createDepense($nomDepense, $montant, $date, $idCategorie, $idUtilisateur);
+    $depense = $depenseCtrl->createDepense($nomDepense, $montant, $idCategorie, $idUtilisateur);
 
     echo(json_encode($depense));
 

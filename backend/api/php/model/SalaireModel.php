@@ -79,8 +79,7 @@ class SalaireModel extends BaseModel {
 
         $query = "SELECT *
         FROM `Salaire`
-        WHERE `Salaire`.`id_utilisateur` = :idUtilisateur
-        ORDER BY `mois_salaire`;";
+        WHERE `Salaire`.`id_utilisateur` = :idUtilisateur;";
 
         $param = [
 
