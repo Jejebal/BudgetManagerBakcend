@@ -23,7 +23,31 @@ $error = [];
 
 $groupeCtrl = new GroupeCtrl();
 
-if($_SERVER["REQUEST_METHOD"] == "PUT"){
+if($_SERVER["REQUEST_METHOD"] == "GET"){
+
+    $idGroupe = 0;
+
+    $idGroupe = filter_input(INPUT_GET, "idGroupe", FILTER_VALIDATE_INT);
+
+    $group = $groupeCtrl->getGroupe($idGroupe);
+
+    echo(json_encode($group));
+
+    if(is_array($group)){
+
+        http_response_code(RESSOURCE_INTROUVABLE);
+        die();
+
+    }
+    else{
+
+        http_response_code(RETOURNE_INFORMATION);
+        die();
+
+    }
+
+}
+else if($_SERVER["REQUEST_METHOD"] == "PUT"){
 
     $idGroupe = 0;
     $impot = 0.0;
