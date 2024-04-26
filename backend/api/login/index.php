@@ -11,6 +11,8 @@
  */
 
 header('Content-type: application/json; charset=utf-8');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-HEADER: *");
 
 require_once("../php/constantes.php");
 require_once("../php/fonction.php");

@@ -13,5 +13,7 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "tuupola/cors-middleware": "^1.4"
+    }
 }
