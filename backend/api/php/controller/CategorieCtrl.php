@@ -22,7 +22,8 @@ class CategorieCtrl {
 
         if(!$categorie){
 
-            $error["read"] = "Une erreur est survenue, veuillez réessayer.";
+            array_push($error, "Une erreur est survenue, veuillez réessayer.");
+            
             return $error;
 
         }

@@ -24,25 +24,25 @@ class DepenseCtrl {
 
         if ($nom == "" || strlen($nom) >= 100 || strlen($nom) <= 3 || !$nom){
 
-            $error["nom"] = "Le nom de la dépense peut contenir entre 3 et 100 caractères.";
+            array_push($error, "Le nom de la dépense peut contenir entre 3 et 100 caractères.");
 
         }
 
         if ($montant == "" || strlen($montant) > 14 || !$montant){
 
-            $error["montant"] = "Arretez de vous mentir, vous ne gagnez pas autant.";
+            array_push($error, "Arretez de vous mentir, vous ne gagnez pas autant.");
 
         }
 
         if($idCategorie <= 0){
 
-            $error["idCategorie"] = "La catégorie que vous essayez d'utilisé ne peux pas existez.";
+            array_push($error, "La catégorie que vous essayez d'utilisé ne peux pas existez.");
 
         }
 
         if($idUtilisateur <= 0){
 
-            $error["idUtilisateur"] = "L'utilisateur que vous essayez d'utilisé ne peux pas existez.";
+            array_push($error, "L'utilisateur que vous essayez d'utilisé ne peux pas existez.");
 
         }
 
@@ -52,7 +52,8 @@ class DepenseCtrl {
 
             if(!is_a($categorie, CategorieModel::class)){
 
-                $error["categorie"] = "La catégorie que vous essayez de liez a votre dépense n'existe pas veuillez réessayez.";
+                array_push($error, "La catégorie que vous essayez de liez a votre dépense n'existe pas veuillez réessayez.");
+
                 return $error;
 
             }
@@ -61,7 +62,8 @@ class DepenseCtrl {
 
             if(!is_a($user, UserModel::class)){
 
-                $error["utilisateur"] = "L'utilisateur que vous essayez de liez a votre dépense n'existe pas veuillez réessayez.";
+                array_push($error, "L'utilisateur que vous essayez de liez a votre dépense n'existe pas veuillez réessayez.");
+
                 return $error;
 
             }
@@ -78,7 +80,7 @@ class DepenseCtrl {
 
             if(!is_int($resultat)){
 
-                $error["insertion"] = "Un problème est survenu lors de la création de votre dépense veuillez réessayer.";
+                array_push($error, "Un problème est survenu lors de la création de votre dépense veuillez réessayer.");
 
                 return $error;
 
@@ -101,7 +103,7 @@ class DepenseCtrl {
 
         if($idUtilisateur <= 0){
 
-            $error["idUtilisateur"] = "L'utilisateur que vous essayez d'utilisé ne peux pas existez.";
+            array_push($error, "L'utilisateur que vous essayez d'utilisé ne peux pas existez.");
 
         }
 
@@ -111,7 +113,7 @@ class DepenseCtrl {
 
             if(!is_a($user, UserModel::class)){
 
-                $error["utilisateur"] = "L'utilisateur que vous essayez d'utilisé n'existez pas.";
+                array_push($error, "L'utilisateur que vous essayez d'utilisé n'existez pas.");
 
             }
 
@@ -119,7 +121,8 @@ class DepenseCtrl {
 
             if(!is_array($depense)){
     
-                $error["read"] = "La somme des dépenses du mois que vous essayez de lire n'existe pas, veuillez réessayer.";
+                array_push($error, "La somme des dépenses du mois que vous essayez de lire n'existe pas, veuillez réessayer.");
+                
                 return $error;
             }
     

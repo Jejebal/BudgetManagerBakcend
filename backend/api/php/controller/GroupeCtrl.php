@@ -24,7 +24,7 @@ class GroupeCtrl {
 
         if(!is_int($groupe)){
 
-            $error["insertion"] = "Un problème est survenu lors de la création de votre groupe veillez réessayer.";
+            array_push($error, "Un problème est survenu lors de la création de votre groupe veillez réessayer.");
 
             return $error;
 
@@ -40,25 +40,25 @@ class GroupeCtrl {
 
         if($idGroupe <= 0){
 
-            $error["idGroupe"] = "Le groupe que vous essayez de modifier ne peux pas existez.";
+            array_push($error, "Le groupe que vous essayez de modifier ne peux pas existez.");
 
         }
 
         if($impot < 0){
 
-            $error["impot"] = "L'impôt que vous essayez d'entrez n'est pas valide. Il dois être plus grand que 0.";
+            array_push($error, "L'impôt que vous essayez d'entrez n'est pas valide. Il dois être plus grand que 0.");
 
         }
 
         if($loyer < 0){
 
-            $error["loyer"] = "Le loyer que vous essayez d'entrez n'est pas valide. Il dois être plus grand que 0.";
+            array_push($error, "Le loyer que vous essayez d'entrez n'est pas valide. Il dois être plus grand que 0.");
 
         }
 
         if($credits < 0){
 
-            $error["credits"] = "Les crédits que vous essayez d'entrez ne sont pas valide. Ils doivent être plus grand que 0.";
+            array_push($error, "Les crédits que vous essayez d'entrez ne sont pas valide. Ils doivent être plus grand que 0.");
 
         }
         
@@ -66,7 +66,7 @@ class GroupeCtrl {
         
         if(!checkdate($date[2], $date[1], $date[0])){
             
-            $error["moisBudget"] = "La date que vous essayez d'insérez n'est pas valide. La date dois être de format Année-Mois-Jours.";
+            array_push($error, "La date que vous essayez d'insérez n'est pas valide. La date dois être de format Année-Mois-Jours.");
         
         }
 
@@ -76,7 +76,7 @@ class GroupeCtrl {
 
             if(!$groupe){
 
-                $error["groupe"] = "Une erreur est survenue l'ore de la récupération de votre groupe veuillez réessayer.";
+                array_push($error, "Une erreur est survenue l'ore de la récupération de votre groupe veuillez réessayer.");
 
                 return $error;
 
@@ -97,7 +97,7 @@ class GroupeCtrl {
                 }
                 else{
 
-                    $error["modification"] = "Une erreur est survenue l'ore de la modification de votre groupe veuillez réessayer.";
+                    array_push($error, "Une erreur est survenue l'ore de la modification de votre groupe veuillez réessayer.");
 
                     return $error;
 
@@ -117,7 +117,7 @@ class GroupeCtrl {
 
         if($idGroupe <= 0){
 
-            $error["idGroupe"] = "Le groupe que vous essayez de récupérez ne peux pas existez.";
+            array_push($error, "Le groupe que vous essayez de récupérez ne peux pas existez.");
 
         }
 
@@ -127,7 +127,7 @@ class GroupeCtrl {
 
             if(!is_a($groupe, GroupeModel::class)){
 
-                $error["groupe"] = "Une erreur est survenue l'ore de la récupération de votre groupe veuillez réessayer.";
+                array_push($error, "Une erreur est survenue l'ore de la récupération de votre groupe veuillez réessayer.");
 
                 return $error;
 

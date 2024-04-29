@@ -24,25 +24,25 @@ class UserCtrl {
 
         if($nom == "" || strlen($nom) < 3 || strlen($nom) > 100 || !$nom){
 
-            $error["nom"] = "Le nom que vous essayez d'utiliser n'est pas valide. Il doit être plus grand que 3 et plus petit que 100.";
+            array_push($error, "Le nom que vous essayez d'utiliser n'est pas valide. Il doit être plus grand que 3 et plus petit que 100.");
 
         }
 
         if($email == "" || strlen($email) < 7 ||strlen($email) > 100 || !$email){
 
-            $error["email"] = "L'email que vous essayez d'ajouter n'est pas valide.";
+            array_push($error, "L'email que vous essayez d'ajouter n'est pas valide.");
 
         }
         
         if($motPasse == "" || strlen($motPasse) < 5 || strlen($motPasse) > 50 || !$motPasse){
 
-            $error["mot de passe"] = "Le mot de passe que vous essayez d'utiliser n'est pas valide. Il dois être plus grand que 5 et plus petit que 50.";
+            array_push($error, "Le mot de passe que vous essayez d'utiliser n'est pas valide. Il dois être plus grand que 5 et plus petit que 50.");
 
         }
 
         if($remediation <= 0 || $remediation > 29){
 
-            $error["remediation"] = "La remediation que vous essayez d'utiliser n'est pas valide. Elle dois être plus grand que 0 et plus petit que 29.";
+            array_push($error, "La remediation que vous essayez d'utiliser n'est pas valide. Elle dois être plus grand que 0 et plus petit que 29.");
 
         }
 
@@ -73,7 +73,7 @@ class UserCtrl {
         
                     if(!is_string($resultat)){
         
-                        $error["insertion"] = "Un problème est survenu lors de la création de votre compte veuillez réessayer.";
+                        array_push($error, "Un problème est survenu lors de la création de votre compte veuillez réessayer.");
         
                         return $error;
         
@@ -83,7 +83,7 @@ class UserCtrl {
     
                     if(!is_a($user, UserModel::class)){
     
-                        $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
+                        array_push($error, "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.");
         
                         return $error;
     
@@ -93,7 +93,7 @@ class UserCtrl {
 
                     if(!is_int($salaire)){
 
-                        $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
+                        array_push($error, "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.");
         
                         return $error;
 
@@ -107,7 +107,7 @@ class UserCtrl {
 
             }
 
-            $error["user"] = "Le nom d'utilisateur que vous essayez de créer existe déjà.";
+            array_push($error, "Le nom d'utilisateur que vous essayez de créer existe déjà.");
 
             return $error;
 
@@ -123,25 +123,25 @@ class UserCtrl {
 
         if($nom == "" || strlen($nom) < 3 || strlen($nom) > 100 || !$nom){
 
-            $error["nom"] = "Le nom que vous essayez d'utiliser n'est pas valide. Il dois être plus grand que 3 et plus petit que 100.";
+            array_push($error, "Le nom que vous essayez d'utiliser n'est pas valide. Il dois être plus grand que 3 et plus petit que 100.");
 
         }
         
         if($motPasse == "" || strlen($motPasse) < 5 || strlen($motPasse) > 50 || !$motPasse){
 
-            $error["mot de passe"] = "Le mot de passe que vous essayez d'utiliser n'est pas valide. Il dois être plus grand que 5 et plus petit que 50.";
+            array_push($error, "Le mot de passe que vous essayez d'utiliser n'est pas valide. Il dois être plus grand que 5 et plus petit que 50.");
 
         }
 
         if($remediation <= 0 || $remediation > 29){
 
-            $error["remediation"] = "La remediation que vous essayez d'utiliser n'est pas valide. Elle dois être plus grand que 0 et plus petit que 29.";
+            array_push($error, "La remediation que vous essayez d'utiliser n'est pas valide. Elle dois être plus grand que 0 et plus petit que 29.");
 
         }
 
         if($idGroupe <= 0){
 
-            $error["groupe"] = "Le groupe que vous essayez d'utiliser ne peut pas exister.";
+            array_push($error, "Le groupe que vous essayez d'utiliser ne peut pas exister.");
 
         }
 
@@ -151,7 +151,7 @@ class UserCtrl {
 
             if(!is_a($groupe, GroupeModel::class)){
 
-                $error["groupe"] = "Le groupe que vous essayer d'utiliser n'existe pas.";
+                array_push($error, "Le groupe que vous essayer d'utiliser n'existe pas.");
 
                 return $error;
 
@@ -169,7 +169,7 @@ class UserCtrl {
     
                 if(!is_string($resultat)){
     
-                    $error["insertion"] = "Un problème est survenu lors de la création de votre compte veuillez réessayer.";
+                    array_push($error, "Un problème est survenu lors de la création de votre compte veuillez réessayer.");
     
                     return $error;
     
@@ -179,7 +179,7 @@ class UserCtrl {
     
                 if(!is_a($user, UserModel::class)){
     
-                    $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
+                    array_push($error, "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.");
     
                     return $error;
     
@@ -189,7 +189,7 @@ class UserCtrl {
 
                 if(!is_int($salaire)){
 
-                    $error["insertion"] = "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.";
+                    array_push($error, "Un problème est survenu lors de la récupération de votre compte veuillez réessayer.");
         
                     return $error;
 
@@ -213,13 +213,13 @@ class UserCtrl {
 
         if($nom == "" || strlen($nom) < 3 || strlen($nom) > 100 || !$nom){
 
-            $error["nom"] = "Le nom que vous essayez d'utiliser ne peux pas exister. Il dois être plus grand que 3 et plus petit que 100.";
+            array_push($error, "Le nom que vous essayez d'utiliser ne peux pas exister. Il dois être plus grand que 3 et plus petit que 100.");
 
         }
 
         if($motPasse == "" || strlen($motPasse) < 5 || strlen($motPasse) > 50 || !$motPasse){
 
-            $error["mot de passe"] = "Le mot de passe que vous essayez d'utiliser ne peux pas exister. Il dois être plus grand que 5 et plus petit que 50.";
+            array_push($error, "Le mot de passe que vous essayez d'utiliser ne peux pas exister. Il dois être plus grand que 5 et plus petit que 50.");
 
         }
 
@@ -229,7 +229,7 @@ class UserCtrl {
 
             if(!$user){
 
-                $error["login"] = "Le compte que vous essayez d'utiliser n'existe pas ou le mot de passe que vous avez rentré n'est pas le bon, veuillez réessayer.";
+                array_push($error, "Le compte que vous essayez d'utiliser n'existe pas ou le mot de passe que vous avez rentré n'est pas le bon, veuillez réessayer.");
                 return $error;
 
             }

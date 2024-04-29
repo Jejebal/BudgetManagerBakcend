@@ -23,7 +23,7 @@ class SalaireCtrl {
 
         if($idUtilisateur <= 0){
 
-            $error["idUtilisateur"] = "L'utilisateur que vous essayez d'utilisé ne peux pas existez veuillez réessayez.";
+            array_push($error, "L'utilisateur que vous essayez d'utilisé ne peux pas existez veuillez réessayez.");
 
         }
 
@@ -33,7 +33,7 @@ class SalaireCtrl {
 
             if(!is_a($user, UserModel::class)){
 
-                $error["utilisateur"] = "L'utilisateur que vous essayer d'utiliser n'existe pas.";
+                array_push($error, "L'utilisateur que vous essayer d'utiliser n'existe pas.");
 
                 return $error;
 
@@ -43,7 +43,7 @@ class SalaireCtrl {
  
             if(!is_a($salaire, SalaireModel::class)){
 
-                $error["read"] = "Le salaire que vous essayez de lire n'existe pas, veuillez réessayer.";
+                array_push($error, "Le salaire que vous essayez de lire n'existe pas, veuillez réessayer.");
 
                 return $error;
 
@@ -66,21 +66,21 @@ class SalaireCtrl {
  
         if ($somme <= 0){
 
-            $error["somme"] = "Veuillez entrer un salaire réel.";
+            array_push($error, "Veuillez entrer un salaire réel.");
 
         }
 
         $date = explode("-", $moisSalaire);
         
         if(!checkdate($date[2], $date[1], $date[0])){
-            
-            $error["moisSalaire"] = "La date que vous essayez d'insérez n'est pas valide. La date dois être de format Année-Mois-Jours.";
+
+            array_push($error, "La date que vous essayez d'insérez n'est pas valide. La date dois être de format Année-Mois-Jours.");
         
         }
 
         if($idUtilisateur <= 0){
 
-            $error["idUtilisateur"] = "L'utilisateur que vous essayez de liez au salaire ne peux pas existez.";
+            array_push($error, "L'utilisateur que vous essayez de liez au salaire ne peux pas existez.");
 
         }
 
@@ -90,7 +90,8 @@ class SalaireCtrl {
 
             if(!is_a($salaire, SalaireModel::class)){
 
-                $error["salaire"] = "Une erreur est survenue l'ore de la récupération de votre salaire veuillez réessayer.";
+                array_push($error, "Une erreur est survenue l'ore de la récupération de votre salaire veuillez réessayer.");
+
                 return $error;
             }
             
@@ -105,7 +106,7 @@ class SalaireCtrl {
 
                 if (!is_int($resultat)) {
 
-                    $error["modification"] = "Un problème est survenu lors de la modification de votre salaire veuillez réessayer.";
+                    array_push($error, "Un problème est survenu lors de la modification de votre salaire veuillez réessayer.");
 
                     return $error;
 

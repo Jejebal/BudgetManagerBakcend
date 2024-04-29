@@ -26,7 +26,7 @@ class HistoriqueCtrl {
 
         if($idGroupe <= 0){
 
-            $error["groupe"] = "Le groupe que vous essayez d'utiliser ne peut pas exister.";
+            array_push($error, "Le groupe que vous essayez d'utiliser ne peut pas exister.");
 
         }
 
@@ -36,7 +36,7 @@ class HistoriqueCtrl {
 
             if(!is_a($groupe, GroupeModel::class)){
 
-                $error["groupe"] = "Le groupe que vous essayer d'utiliser n'existe pas.";
+                array_push($error, "Le groupe que vous essayer d'utiliser n'existe pas.");
 
                 return $error;
 
@@ -68,7 +68,7 @@ class HistoriqueCtrl {
 
                 }
 
-                $error["recuperation"] = "Un problème est survenu lors de la récupération des utilisateur du groupe veuillez réessayer.";
+                array_push($error, "Un problème est survenu lors de la récupération des utilisateur du groupe veuillez réessayer.");
 
                 return $error;
 
