@@ -49,13 +49,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(is_array($user)){
 
             echo(json_encode(["error" => $user]));
-            http_response_code(INCOMPLET);
+            http_response_code(RETOURNE_INFORMATION);
             die();
         }
         else{
 
             echo(json_encode($user));
-            http_response_code(CREE_RESSOURCE);
+            http_response_code(RETOURNE_INFORMATION);
             die();
 
         }
@@ -68,14 +68,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(is_array($user)){
 
             echo(json_encode(["error" => $user]));
-            http_response_code(INCOMPLET);
+            http_response_code(RETOURNE_INFORMATION);
             die();
 
         }
         else{
 
             echo(json_encode($user));
-            http_response_code(CREE_RESSOURCE);
+            http_response_code(RETOURNE_INFORMATION);
             die();
 
         }
@@ -84,7 +84,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     else{
 
         echo(json_encode(["error" => ["Vous n'avez par fournie le nombre d'information nécessaire pour créer un utilisateur."]]));
-        http_response_code(INCOMPLET);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
@@ -92,7 +92,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 else{
 
-    http_response_code(SERVEUR_PROBLEME);
+    http_response_code(RETOURNE_INFORMATION);
     die();
 
 }

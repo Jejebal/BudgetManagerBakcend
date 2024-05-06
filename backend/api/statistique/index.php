@@ -52,7 +52,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     if(is_array($salaire) || is_array($budget) || is_array($depense)){
 
         echo(json_encode(["error" => $list]));
-        http_response_code(RESSOURCE_INTROUVABLE);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
@@ -67,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 }
 else{
 
-    http_response_code(SERVEUR_PROBLEME);
+    http_response_code(RETOURNE_INFORMATION);
     die();
 
 }

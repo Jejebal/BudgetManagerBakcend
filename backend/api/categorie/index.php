@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     if(is_array($categorieCtrl)){
 
         echo(json_encode(["error" => $categories]));
-        http_response_code(SERVEUR_PROBLEME);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
@@ -47,7 +47,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 else
 {
 
-    http_response_code(SERVEUR_PROBLEME);
+    http_response_code(RETOURNE_INFORMATION);
     die();
 
 }

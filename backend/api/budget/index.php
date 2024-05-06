@@ -37,7 +37,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 
     if(is_array($group)){
 
-        http_response_code(RESSOURCE_INTROUVABLE);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
@@ -70,14 +70,14 @@ else if($_SERVER["REQUEST_METHOD"] == "PUT"){
     if(is_array($groupe)){
 
         echo(json_encode(["error" => $groupe]));
-        http_response_code(INCOMPLET);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
     else{
 
         echo(json_encode($groupe));
-        http_response_code(MODIFIE_RESSOURCE);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
@@ -85,7 +85,7 @@ else if($_SERVER["REQUEST_METHOD"] == "PUT"){
 }
 else{
 
-    http_response_code(SERVEUR_PROBLEME);
+    http_response_code(RETOURNE_INFORMATION);
     die();
 
 }

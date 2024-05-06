@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     if(array_key_exists("groupe", $historique) || array_key_exists("recuperation", $historique)){
 
         echo(json_encode(["error" => $historique]));
-        http_response_code(RESSOURCE_INTROUVABLE);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
@@ -50,7 +50,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 }
 else{
 
-    http_response_code(SERVEUR_PROBLEME);
+    http_response_code(RETOURNE_INFORMATION);
     die();
 
 }

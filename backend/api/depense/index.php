@@ -53,7 +53,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     if(is_array($salaire) || is_array($budget)){
 
         echo(json_encode(["error" => $list]));
-        http_response_code(RESSOURCE_INTROUVABLE);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
@@ -84,7 +84,7 @@ else if($_SERVER["REQUEST_METHOD"] == "PUT"){
     {
 
         echo(json_encode(["error" => $salaire]));
-        http_response_code(INCOMPLET);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
@@ -92,7 +92,7 @@ else if($_SERVER["REQUEST_METHOD"] == "PUT"){
     {
 
         echo(json_encode($salaire));
-        http_response_code(MODIFIE_RESSOURCE);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
@@ -122,7 +122,7 @@ else if($_SERVER["REQUEST_METHOD"] == "POST"){
     {
 
         echo(json_encode(["error" => $depense]));
-        http_response_code(INCOMPLET);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
@@ -130,7 +130,7 @@ else if($_SERVER["REQUEST_METHOD"] == "POST"){
     {
         
         echo(json_encode($depense));
-        http_response_code(CREE_RESSOURCE);
+        http_response_code(RETOURNE_INFORMATION);
         die();
 
     }
@@ -139,7 +139,7 @@ else if($_SERVER["REQUEST_METHOD"] == "POST"){
 else
 {
 
-    http_response_code(SERVEUR_PROBLEME);
+    http_response_code(RETOURNE_INFORMATION);
     die();
 
 }
