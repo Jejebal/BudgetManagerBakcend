@@ -32,16 +32,16 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 
     $historique = $historiqueCtrl->getAllHistorique($idGroupe);
 
-    echo(json_encode($historique));
-
     if(array_key_exists("groupe", $historique) || array_key_exists("recuperation", $historique)){
 
+        echo(json_encode(["error" => $historique]));
         http_response_code(RESSOURCE_INTROUVABLE);
         die();
 
     }
     else{
 
+        echo(json_encode($historique));
         http_response_code(RETOURNE_INFORMATION);
         die();
 

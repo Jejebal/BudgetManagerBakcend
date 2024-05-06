@@ -49,16 +49,16 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 
     ];
 
-    echo(json_encode($list));
-
     if(is_array($salaire) || is_array($budget) || is_array($depense)){
 
+        echo(json_encode(["error" => $list]));
         http_response_code(RESSOURCE_INTROUVABLE);
         die();
 
     }
     else{
 
+        echo(json_encode($list));
         http_response_code(RETOURNE_INFORMATION);
         die();
 

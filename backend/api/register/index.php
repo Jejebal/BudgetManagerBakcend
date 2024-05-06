@@ -36,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $donnees = recuperDonner();
 
-    $nom = array_key_exists("nom", $donnees) ? filter_var($donnees["nom"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
+    $nom = array_key_exists("nomUtilisateur", $donnees) ? filter_var($donnees["nomUtilisateur"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
     $email = array_key_exists("email", $donnees) ? filter_var($donnees["email"], FILTER_VALIDATE_EMAIL) : null;
     $motPasse = array_key_exists("motPasse", $donnees) ? filter_var($donnees["motPasse"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
     $remediation = array_key_exists("remediation", $donnees) ? filter_var($donnees["remediation"], FILTER_VALIDATE_INT) : null;
@@ -46,15 +46,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $user = $userCtrl->createMember($nom, $motPasse, $remediation, $idGroupe);
 
-        echo(json_encode($user));
-
         if(is_array($user)){
 
+            echo(json_encode(["error" => $user]));
             http_response_code(INCOMPLET);
             die();
         }
         else{
 
+            echo(json_encode($user));
             http_response_code(CREE_RESSOURCE);
             die();
 
@@ -65,16 +65,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $user = $userCtrl->createAdmin($nom, $email, $motPasse, $remediation, $groupeCtrl);
 
-        echo(json_encode($user));
-
         if(is_array($user)){
 
+            echo(json_encode(["error" => $user]));
             http_response_code(INCOMPLET);
             die();
 
         }
         else{
 
+            echo(json_encode($user));
             http_response_code(CREE_RESSOURCE);
             die();
 
@@ -83,7 +83,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     else{
 
-        echo(json_encode(["data" => "Vous n'avez par fournie le nombre d'information nécessaire pour créer un utilisateur."]));
+        echo(json_encode(["error" => ["Vous n'avez par fournie le nombre d'information nécessaire pour créer un utilisateur."]]));
         http_response_code(INCOMPLET);
         die();
 

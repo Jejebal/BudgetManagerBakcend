@@ -67,16 +67,16 @@ else if($_SERVER["REQUEST_METHOD"] == "PUT"){
 
     $groupe = $groupeCtrl->modifieGroup($idGroupe, $impot, $loyer, $credits, $moisBudget);
 
-    echo(json_encode($groupe));
-
     if(is_array($groupe)){
 
+        echo(json_encode(["error" => $groupe]));
         http_response_code(INCOMPLET);
         die();
 
     }
     else{
 
+        echo(json_encode($groupe));
         http_response_code(MODIFIE_RESSOURCE);
         die();
 

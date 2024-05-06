@@ -28,16 +28,16 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 
     $categories = $categorieCtrl->readAllCategorie();
 
-    echo(json_encode($categories));
-
     if(is_array($categorieCtrl)){
 
+        echo(json_encode(["error" => $categories]));
         http_response_code(SERVEUR_PROBLEME);
         die();
 
     }
     else{
 
+        echo(json_encode($categories));
         http_response_code(RETOURNE_INFORMATION);
         die();
 

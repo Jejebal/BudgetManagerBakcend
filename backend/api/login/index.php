@@ -31,21 +31,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $donnees = recuperDonner();
 
-    $nom = array_key_exists("nom", $donnees) ? filter_var($donnees["nom"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
+    $nom = array_key_exists("nomUtilisateur", $donnees) ? filter_var($donnees["nomUtilisateur"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
     $motPasse = array_key_exists("motPasse", $donnees) ? filter_var($donnees["motPasse"], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
 
     $user = $userCtrl->checkLogin($nom, $motPasse);
 
-    echo(json_encode($user));
-
     if(is_array($user)){
 
+        echo(json_encode(["error" => $user]));
         http_response_code(INCOMPLET);
         die();
 
     }
     else{
         
+        echo(json_encode($user));
         http_response_code(RETOURNE_INFORMATION);
         die();
 

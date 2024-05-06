@@ -50,16 +50,16 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 
     ];
 
-    echo(json_encode($list));
-
     if(is_array($salaire) || is_array($budget)){
 
+        echo(json_encode(["error" => $list]));
         http_response_code(RESSOURCE_INTROUVABLE);
         die();
 
     }
     else{
 
+        echo(json_encode($list));
         http_response_code(RETOURNE_INFORMATION);
         die();
 
@@ -80,11 +80,10 @@ else if($_SERVER["REQUEST_METHOD"] == "PUT"){
 
     $salaire = $salaireCtrl->updateSalaire($somme, $moisSalaire, $idUtilisateur);
 
-    echo(json_encode($salaire));
-
     if(is_array($salaire))
     {
 
+        echo(json_encode(["error" => $salaire]));
         http_response_code(INCOMPLET);
         die();
 
@@ -92,6 +91,7 @@ else if($_SERVER["REQUEST_METHOD"] == "PUT"){
     else
     {
 
+        echo(json_encode($salaire));
         http_response_code(MODIFIE_RESSOURCE);
         die();
 
@@ -118,11 +118,10 @@ else if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $depense = $depenseCtrl->createDepense($nomDepense, $montant, $idCategorie, $idUtilisateur);
 
-    echo(json_encode($depense));
-
     if(is_array($depense))
     {
 
+        echo(json_encode(["error" => $depense]));
         http_response_code(INCOMPLET);
         die();
 
@@ -130,6 +129,7 @@ else if($_SERVER["REQUEST_METHOD"] == "POST"){
     else
     {
         
+        echo(json_encode($depense));
         http_response_code(CREE_RESSOURCE);
         die();
 
