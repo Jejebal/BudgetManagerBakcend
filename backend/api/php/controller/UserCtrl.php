@@ -160,7 +160,7 @@ class UserCtrl {
 
                 $user = new UserModel([ 
                     "nom_utilisateur" => $nom,
-                    "mot_passe" => password_hash($motPasse, PASSWORD_DEFAULT),
+                    "mot_passe" => $motPasse,
                     "remediation" => $remediation,
                     "id_groupe" => $idGroupe
                 ]);
