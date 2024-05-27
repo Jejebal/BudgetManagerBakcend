@@ -22,6 +22,10 @@ class HistoriqueCtrl {
 
         $error = [];
 
+        $listNom = [];
+
+        $listArrayDepenses = [];
+
         $historique = [];
 
         if($idGroupe <= 0){
@@ -49,20 +53,20 @@ class HistoriqueCtrl {
 
                     foreach($listUser as $user){
 
+                        array_push($listNom, $user->nomUtilisateur);
+
                         $listDepense = DepenseModel::selectAllDepenseByUser($user->idUtilisateur);
 
-                        if(is_array($listDepense)){
-
-                            $historique[$user->nomUtilisateur] = $listDepense;
-
-                        }
-                        else{
-
-                            $historique[$user->nomUtilisateur] = null;
-
-                        }
+                        array_push($listArrayDepenses, $listDepense);
     
                     }
+
+                    $historique = [
+
+                        "Utilisateurs" => $listNom,
+                        "Depenses" => $listArrayDepenses
+
+                    ];
     
                     return $historique;
 
